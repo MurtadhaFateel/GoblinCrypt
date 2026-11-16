@@ -8,7 +8,7 @@ A dungeon crawler where you choose one character from warrior, wizard and a roug
 
 ### Sprint 1
 
-Goal: [Describe the result you want.]
+Goal: The player should kill the boss by reaching their health to 0 and win the game. 
 
 Start: [Date]
 End: [Date]
