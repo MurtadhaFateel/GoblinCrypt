@@ -10,5 +10,5 @@ A dungeon crawler where you choose one character from warrior, wizard and a roug
 
 Goal: The player should kill the boss by reaching their health to 0 and win the game. 
 
-Start: [Date]
-End: [Date]
+Start: 16/Nov/2026
+End: 24/Nov/2026
