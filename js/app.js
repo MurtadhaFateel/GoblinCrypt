@@ -17,7 +17,7 @@ let monsterActionDisplayEl = document.querySelector('#monsterActionDisplay')
 let battleLogEl = document.querySelector('#battleLog')
 
 //Game Charatcer (Player or Monster) class with their stats: name, HP, Attack Skill, Power Up Skill, Healing Potion
-class GameCharater {
+class GameCharacter {
     constructor(name, hp=100, attackskill=20, powerup=1.5, potion=25) {
         this.charNameEl = name
         this.charHPEl = hp
@@ -29,20 +29,23 @@ class GameCharater {
 
 //Charaters Objects
 //Player
-const player = new GameCharater('Warrior')
-console.log(player)
+const player = new GameCharacter('Warrior')
+// console.log(player)
 //Monster 1
-const monster1 = new GameCharater('Goblin')
-console.log(monster1)
+const monster1 = new GameCharacter('Goblin')
+// console.log(monster1)
 //Monster 2
-const monster2 = new GameCharater('Goblin')
-console.log(monster2)
+const monster2 = new GameCharacter('Goblin')
+// console.log(monster2)
 //Monster 3 
-const monster3 = new GameCharater('Goblin')
-console.log(monster3)
+const monster3 = new GameCharacter('Goblin')
+// console.log(monster3)
 //Dungeon Boss 
-const bossMonster = new GameCharater('Dungeon Boss')
-console.log(bossMonster)
+const bossMonster = new GameCharacter('Dungeon Boss')
+// console.log(bossMonster)
+
+//************************************ Event Listeners ************************************
+
 
 
 
