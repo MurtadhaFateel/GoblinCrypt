@@ -4,25 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Player Vs Monster</title>
-    <link rel="stylesheet" href="./css/style.css">
     <script src="./js/app.js" defer></script>
-    <a href="./html/gameInstructions.html">Start Game</a>
+    <a href="./html/gameInstructions.html">Game Instructions</a>
 </head>
 <body>
-    <h1>Player Vs Monsters</h1>
+    <main class="container">
 
-    <h2>Game Instructions</h2>
-    <div id="GameInstructions">
-        <ul id="InstructionsList">
-            <li>Your Objectives is to defeat the monsters and the final boss to win the game</li>
-            <li>This is a turn-based game, where a player and a monster will have one action per turn.</li>
-            <li>Player turn: will have an option to attack or use a healing potion</li>
-            <li>Monster/Boss Turn:  A monster or the boss will only have the option to attack</li>
-            <li>Hope you enjoy the game</li>
-        </ul>
-    </div>
-
-    <!-- <button id="StartGamebtn">Start the Game</button> -->
-
+        <div id="charcterAction">
+            <h3 id="CharName">Character Name</h3>
+            
+            <p id="charHP">100</p>
+            
+            <button id="charAttackSkill">
+                Attack Skill
+            </button>
+            
+            <button id="charPowerUp">
+                Power Up
+            </button>
+            
+            <button id="charPotion">
+                Healing Potion
+            </button>
+        </div>
+        
+        <div id="monsterAction">
+            <label >Monster Action: </label> <label id="monsterActionDisplay">Java Script</label>
+        </div>
+    </main>
 </body>
 </html>
