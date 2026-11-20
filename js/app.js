@@ -29,6 +29,7 @@ class GameCharacter {
     }
 
     //*********************** Methods Getters ***********************
+    //Getting the intial Character Values
     //Method: getgameCharName - Getting the charater name
     getName() {
         return this.gameCharName
@@ -42,20 +43,45 @@ class GameCharacter {
         return this.gameCharAttackSkill
     }
     //Method: getgameCharPowerUp - Getting the Game Charater Power Up
+    getPowerUp() {
+        return this.gameCharPowerUp
+    }
     //Method: getgameCharisPoweredUp - Getting if the Game Charater is Powered Up
+    getisPoweredUp() {
+        return this.gameCharisPoweredUp
+    }
     //Method: getgameCharPotion - Getting the Game Charater Potion
+    getPotion() {
+        return this.gameCharPotion
+    }
 
-    //*********************** Methods Getters ***********************
+    //*********************** Methods Setters ***********************
+    //Setting the Charater's new value
     //Method: setgameCharName
-        setName(name){
+        setName(name) {
         this.gameCharName=name
     } 
 
-    //Method: setGameCharHP(num) - Setting the Charater HP
-    //Method: setgameCharAttackSkill(num) - Setting the Character Attack Skill
-    //Method: setgameCharPowerUp(num) - Setting the Game Charater Power Up
+    //Method: setGameCharHP(newValue) - Setting the Charater HP
+    setHP(newValue) {
+        this.gameCharHP=newValue
+    }
+    //Method: setgameCharAttackSkill(newValue) - Setting the Character Attack Skill
+    setAttackSkill(newValue) {
+        this.gameCharAttackSkill=newValue
+    }
+    //Method: setgameCharPowerUp(newValue) - Setting the Game Charater Power Up
+    setPowerUp(newValue) {
+        this.gameCharPowerUp=newValue
+    }
     //Method: setgameCharisPoweredUp(boolean) - Setting if the Game Charater is Powered Up
-    //Method: setgameCharPotion(num) - Setting the Game Charater Potion
+    setisPoweredUp(isPoweredUp) {
+        this.gameCharisPoweredUp=isPoweredUp
+    }
+    //Method: setgameCharPotion(newValue) - Setting the Game Charater Potion
+    setPotion(newValue) {
+        this.gameCharPotion=newValue
+    }
 
     //*********************** Methods ***********************
     //Method: Attack - Attack button skill is clicked
