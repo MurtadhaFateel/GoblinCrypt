@@ -19,7 +19,7 @@ let monsterActionDisplayEl = document.querySelector('#monsterActionDisplay')
 let battleLogEl = document.querySelector('#battleLog')
 
 //*************************************************** Classes ***************************************************
-//Game Character (Player or Monster) class with stats: Name, HP, Attack Skill, Power Up Skill, Power Up Skill Active/Inactive, Healing Potion 
+//Game Character (Player or Monster or Boss Monster) class with stats: Name, HP, Attack Skill, Power Up Skill, Power Up Skill Active/Inactive, Healing Potion 
 class GameCharacter {
     constructor(name, hp=100, attackskill=15, powerup=1.5, potion=25) {
         this.gameCharName = name
@@ -121,8 +121,27 @@ class GameCharacter {
         return characterHealth > 0
     }
 
+    //Method: Take Damage (Reduce Character Health Point until it reaches 0)
+    takeDamage(receivedDamage) {
+        //Safe Guard if Damage Received is less than 0
+        if(receivedDamage < 0) {
+            receivedDamage = 0
+        }
+
+        //Current Character HP 
+        let currentHP = this.getHP()
+        //Updated Character HP after receiving damage
+        let updatedHP = currentHP-receivedDamage
+
+        //Safe Guard if Character HP goes below 0
+        if(updatedHP < 0) {
+            updatedHP = 0
+        }
+
+        //Set the updated HP value after receiving damage
+        this.setHP(updatedHP)
+    }
     //Method: Calculate Healing Potion 
-    //Method: Calculate Damage - needed?
     //Method: Calculate Power Up Skill Damage - needed?
     //Method: Check Power Up Skill Active or InActive
 
@@ -144,6 +163,15 @@ const monster3 = new GameCharacter('Goblin')
 //Dungeon Boss 
 const bossMonster1 = new GameCharacter('Dungeon Boss')
 // console.log(bossMonster)
+//Array for Monsters/Boss Objects 
+const monsters = [monster1, monster2, monster3, bossMonster1]
+
+//Test Player Take Damage
+// player.takeDamage(40)
+// console.log(`Player HP after taking damage: ${player.getHP()}`)
+//Test Monster 1 Take Damage
+// monsters[0].takeDamage(40)
+// console.log(`Monster 1 HP after taking Damage: ${monsters[0].getHP()}`)
 
 //************************************ Functions ************************************
 //Function: Display Character Stats - Health Point
