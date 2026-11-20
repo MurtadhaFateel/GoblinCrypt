@@ -114,10 +114,10 @@ class GameCharacter {
 
 //Characters and Monsters Objects
 //Player
-const player = new GameCharacter('Warrior', 150)
+const player = new GameCharacter('Warrior', 170)
 // console.log(player)
 //Monster 1
-const monster1 = new GameCharacter('Goblin')
+const monster1 = new GameCharacter('Goblin', 50)
 // console.log(monster1)
 //Monster 2
 const monster2 = new GameCharacter('Goblin')
@@ -132,13 +132,14 @@ const bossMonster = new GameCharacter('Dungeon Boss')
 //************************************ Functions ************************************
 //Function: Display Character Stats - Health Point
 const renderCharacterStats = () => {
-    charHPEl.textContent = player.gameCharHP
+    charHPEl.textContent = player.getHP()
 }
 renderCharacterStats()
 
+//How to streamline this for all monsters/bosses or seperate for monster/bosses - store character objects in an Array? 
 //Function: Display Character Stats - Health Point
 const renderMonsterStats = () => {
-    monsterHPEl.textContent = monster1.gameCharHP
+    monsterHPEl.textContent = monster1.getHP()
 }
 renderMonsterStats()
 
@@ -149,6 +150,11 @@ charAttackSkillBtnEl.addEventListener('click', () => {
     let playerAttackDmg = player.attack()
     console.log(`Player Name: ${player.getName()} attacked for ${playerAttackDmg} damage.`)
 })
+
+//Event Listener: Player Power Up Skill Button Clicked
+
+//Event Listener: player Healing Potion Button Clicked 
+
 
 
 
