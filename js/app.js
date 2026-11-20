@@ -10,6 +10,8 @@ let charPowerUpBtnEl = document.querySelector('#charPowerUp')
 // Character Potion Button
 let charPotionBtnEl = document.querySelector('#charPotion') 
 
+//Monster Name
+let monsterNameEl = document.querySelector('#monsterName')
 //Monster Health Point 
 let monsterHPEl = document.querySelector('#monsterHP')
 //Monster Display Action
@@ -150,13 +152,13 @@ class GameCharacter {
 const player = new GameCharacter('Warrior', 120)
 // console.log(player)
 //Monster 1
-const monster1 = new GameCharacter('Goblin 1', 90)
+const monster1 = new GameCharacter('Goblin 1')
 // console.log(monster1)
 //Monster 2
-const monster2 = new GameCharacter('Goblin 2', 80)
+const monster2 = new GameCharacter('Goblin 2')
 // console.log(monster2)
 //Monster 3 
-const monster3 = new GameCharacter('Goblin 3', 70)
+const monster3 = new GameCharacter('Goblin 3')
 // console.log(monster3)
 //Dungeon Boss 
 const bossMonster1 = new GameCharacter('Dungeon Boss', 200)
@@ -168,16 +170,16 @@ const monsters = [monster1, monster2, monster3, bossMonster1]
 // player.takeDamage(40)
 // console.log(`Player HP after taking damage: ${player.getHP()}`)
 //Test Monster 1 Take Damage
-monsters[0].takeDamage(10)
+// monsters[0].takeDamage(10)
 // console.log(`${monsters[0].getName()} HP after taking Damage: ${monsters[0].getHP()}`)
 //Monster 2
-monsters[1].takeDamage(10)
+// monsters[1].takeDamage(10)
 // console.log(`${monsters[1].getName()} HP after taking Damage: ${monsters[1].getHP()}`)
 //Monster 3
-monsters[2].takeDamage(10)
+// monsters[2].takeDamage(10)
 // console.log(`${monsters[2].getName()} HP after taking Damage: ${monsters[2].getHP()}`)
 //Monster 4 Boss
-monsters[3].takeDamage(10)
+// monsters[3].takeDamage(10)
 // console.log(`${monsters[3].getName()} HP after taking Damage: ${monsters[3].getHP()}`)
 
 //************************************ Functions ************************************
@@ -196,9 +198,10 @@ const getCurrentMonster = () => {
     return monsters[currentMonsterIndex]
 }
 
-//Function: Display active Monster/Boss Health Point
+//Function: Display active Monster/Boss Name and Health Point
 const renderMonsterStats = () => {
     let activeMonster = getCurrentMonster()
+    monsterNameEl.textContent = activeMonster.getName()
     monsterHPEl.textContent = activeMonster.getHP()
 }
 //Check for Monster stats - Health Point 
