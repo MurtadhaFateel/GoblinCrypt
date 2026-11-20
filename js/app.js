@@ -37,7 +37,7 @@ class GameCharacter {
     //Method: Get the Character Name
     getName() {
         return this.name
-    } 
+    }
     //Method: Get the Character HP
     getHP() {
         return this.hp
@@ -102,10 +102,10 @@ class GameCharacter {
         //Boolean to check if character is Powered Up 
         let isPoweredUp = this.getIsPoweredUp()
 
-        //If statement to check if character is Powered Up, then apply the power up multiplier  
+        //If statement to check if character is Powered Up, then apply the power up once then reset  
         if(isPoweredUp===true) {
-            let powerUp = this.getPowerUp()
-            let damage = baseAttackDmg * powerUp
+            //Get Powered Up Attack Damage from method 
+            let damage = this.getPoweredUpAttackDmg()
             //Reset the Power Up
             this.setIsPoweredUp(false) 
             //Return the Powered Up Attack Damage
@@ -142,8 +142,19 @@ class GameCharacter {
         //Set the updated HP value after receiving damage
         this.setHP(updatedHP)
     }
-    //Method: Calculate Healing Potion 
-    //Method: Check Power Up Skill Active or InActive
+
+    //Method: Calculate Powered Up Attack Damage
+    getPoweredUpAttackDmg() {
+        //Variable to get Character Attack Skill Base Damage
+        let baseAttackSkillDmg = this.getAttackSkill()
+        //Variable to get Character Power Up Multiplier 
+        let powerUp = this.getPowerUp()
+        //Return Powered Up Attack
+        return baseAttackSkillDmg * powerUp
+    }
+
+    //Method: Calculate Healing Potion
+    
 
 }
 
@@ -204,7 +215,7 @@ const renderMonsterStats = () => {
     monsterNameEl.textContent = activeMonster.getName()
     monsterHPEl.textContent = activeMonster.getHP()
 }
-//Check for Monster stats - Health Point 
+//Check for Monster stats - Name and Health Point 
 renderMonsterStats()
 
 //************************************ Event Listeners ************************************
@@ -215,9 +226,16 @@ charAttackSkillBtnEl.addEventListener('click', () => {
 })
 
 //Event Listener: Player Power Up Skill Button Clicked
+charPowerUpBtnEl.addEventListener('click', () => {
+    player.setIsPoweredUp(true)
+    let playerPowerUp = player.getPowerUp()
+    console.log(`Player Name: ${player.getName()} has powered up it's attack by ${playerPowerUp} for next turn.`)
+})
 
 //Event Listener: Player Healing Potion Button Clicked 
+charPotionBtnEl.addEventListener('click', () => {
 
+})
 
 
 
