@@ -1,6 +1,6 @@
 //*************************************************** Cached elements ***************************************************
 //Character Name 
-let charNameEl = document.querySelector('#CharName') 
+let charNameEl = document.querySelector('#charName') 
 // Character Health Point
 let charHPEl = document.querySelector('#charHP')
 // Character Attack Skill Button
@@ -87,6 +87,16 @@ class GameCharacter {
     //*********************** Methods ***********************
     //Method: Attack - Attack button skill is clicked
     attack() {
+        //Boolean to check if character is Alive
+        let isAlive = this.checkCharacterHealth()
+        if(isAlive === false) {
+            // Log if character HP is 0 for testing
+            // console.log('Character dead')
+            return 0 
+        }
+        // log if character HP is > 0 for testing
+        // console.log('Alive') 
+
         //Variable to get Character Attack Skill Base Damage
         let baseAttackDmg = this.getAttackSkill()
         //Boolean to check if character is Powered Up 
@@ -104,7 +114,13 @@ class GameCharacter {
         return baseAttackDmg
     }
 
-    //Method: Check Character Health
+    //Method: Check Character Health (Character Health Point is greater than 0 or alive)
+    checkCharacterHealth()
+    {
+        let characterHealth = this.getHP()
+        return characterHealth > 0
+    }
+
     //Method: Calculate Healing Potion 
     //Method: Calculate Damage - needed?
     //Method: Calculate Power Up Skill Damage - needed?
@@ -114,10 +130,10 @@ class GameCharacter {
 
 //Characters and Monsters Objects
 //Player
-const player = new GameCharacter('Warrior', 170)
+const player = new GameCharacter('Warrior', 120)
 // console.log(player)
 //Monster 1
-const monster1 = new GameCharacter('Goblin', 50)
+const monster1 = new GameCharacter('Goblin')
 // console.log(monster1)
 //Monster 2
 const monster2 = new GameCharacter('Goblin')
@@ -126,15 +142,15 @@ const monster2 = new GameCharacter('Goblin')
 const monster3 = new GameCharacter('Goblin')
 // console.log(monster3)
 //Dungeon Boss 
-const bossMonster = new GameCharacter('Dungeon Boss')
+const bossMonster1 = new GameCharacter('Dungeon Boss')
 // console.log(bossMonster)
 
 //************************************ Functions ************************************
 //Function: Display Character Stats - Health Point
-const renderCharacterStats = () => {
+const renderPlayerStats = () => {
     charHPEl.textContent = player.getHP()
 }
-renderCharacterStats()
+renderPlayerStats()
 
 //How to streamline this for all monsters/bosses or seperate for monster/bosses - store character objects in an Array? 
 //Function: Display Character Stats - Health Point
