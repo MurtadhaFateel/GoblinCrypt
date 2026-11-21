@@ -20,6 +20,10 @@ let monsterActionDisplayEl = document.querySelector('#monsterActionDisplay')
 //Battle Log 
 let battleLogEl = document.querySelector('#battleLog')
 
+//*************************************************** Variables ***************************************************
+let gameOver = false
+let monsterTurnRunning = false 
+
 //*************************************************** Classes ***************************************************
 //Game Character (Player or Monster or Boss Monster) class with stats: Name, HP, Attack Skill, Power Up Skill, Power Up Skill Active/Inactive, Healing Potion 
 class GameCharacter {
@@ -261,24 +265,62 @@ const renderMonsterStats = () => {
 //Check for Monster stats - Name and Health Point 
 renderMonsterStats()
 
+//Function: Check if battle has ended or move to the next monster
+const checkBattleEnded = () => {
+    //Get the monster active in battle 
+    let monster = getCurrentMonster()
+
+    //Check if player's health is 0 (false = 0)
+    if(player.checkCharacterHealth() === false) {
+        //Boolean - Game Over no more turns
+        gameOver = true 
+        //Log Player defeat message to battle log 
+        battleLogEl.innerHTML += `<p>${player.getName()} has been defeated!</p>`
+        //Log Game Over
+        console.log('Game Over - Player has been defeated!')
+        //Stop checking function 
+        return 
+    }
+
+    //Check if the current monster's health is 0 
+    if(monster.checkCharacterHealth() === false) {
+        //Log that this monster was in the battle log
+        battleLogEl.innerHTML += `<p>${monster.getName()} has been defeated!</p>`
+
+        //Check if there are remaining Monsters in the Monsters Array
+        if(currentMonsterIndex < monsters.length - 1) {
+            //Move to the next monster
+            currentMonsterIndex++
+            //Update monster name and HP on screen by calling fucntion
+            renderMonsterStats()
+            //Announce the next Monster in the battle log
+            battleLogEl.innerHTML += `<p>${getCurrentMonster().getName()} has spawned!</p>`
+        } else {
+            //No remaining Monsters are available and Player has won
+            gameOver = true 
+            //Victory message to battle log
+            battleLogEl.innerHTML += `<p>You have defeated every monster, Victory!</p>`
+        }
+    }
+}
+
+//Function: Monsters takes it turn after a short delay
+
+//Function: Handle player button click 
+
+
 //************************************ Event Listeners ************************************
 //Event Listener: Player Attack Skill Button Clicked
 charAttackSkillBtnEl.addEventListener('click', () => {
-    let playerAttackDmg = player.attack()
-    console.log(`Player Name: ${player.getName()} attacked for ${playerAttackDmg} damage.`)
+
 })
 
 //Event Listener: Player Power Up Skill Button Clicked
 charPowerUpBtnEl.addEventListener('click', () => {
-    player.setIsPoweredUp(true)
-    let playerPowerUp = player.getPowerUp()
-    console.log(`Player Name: ${player.getName()} has powered up it's attack by ${playerPowerUp} for next turn.`)
+
 })
 
 //Event Listener: Player Healing Potion Button Clicked 
 charPotionBtnEl.addEventListener('click', () => {
-    let healingAmountPotion = player.getHealingPotionAmount()
-    let healingPotion = player.getPotion()
-    charHPEl.textContent = player.getHP()
-    console.log(`Player: ${player.getName()} has has used a potion and healed for amount: ${healingPotion}. Total Health Point: ${healingAmountPotion}`)
+
 })
