@@ -22,7 +22,7 @@ let battleLogEl = document.querySelector('#battleLog')
 
 //*************************************************** Variables ***************************************************
 let gameOver = false
-let monsterTurnRunning = false 
+let isMonsterTurnActive = false 
 
 //*************************************************** Classes ***************************************************
 //Game Character (Player or Monster or Boss Monster) class with stats: Name, HP, Attack Skill, Power Up Skill, Power Up Skill Active/Inactive, Healing Potion 
@@ -106,8 +106,8 @@ class GameCharacter {
         //Boolean to check if character is Powered Up 
         let isPoweredUp = this.getIsPoweredUp()
 
-        //If statement to check if character is Powered Up, then apply the power up once then reset  
-        if(isPoweredUp===true) {
+        //If statement to check if character is Powered Up, then apply the Power Up once then reset  
+        if(isPoweredUp === true) {
             //Get Powered Up Attack Damage from method 
             let damage = this.getPoweredUpAttackDmg()
             //Reset the Power Up
@@ -128,7 +128,7 @@ class GameCharacter {
 
     //Method: Take Damage (Reduce Character Health Point until it reaches 0)
     takeDamage(receivedDamage) {
-        //Safe Guard if Damage Received is less than 0
+        //Safeguard if Damage Received is less than 0
         if(receivedDamage < 0) {
             receivedDamage = 0
         }
@@ -138,7 +138,7 @@ class GameCharacter {
         //Updated Character HP after receiving damage
         let updatedHP = currentHP-receivedDamage
 
-        //Safe Guard if Character (Player or Monster) HP goes below 0
+        //Safeguard if Character (Player or Monster) HP goes below 0
         if(updatedHP < 0) {
             //If HP less than 0 then assign value to 0 to prevent going into negative value
             updatedHP = 0
@@ -179,7 +179,7 @@ class GameCharacter {
             target.takeDamage(damage)
             //Valid turn recorded 
             actedTurn = true
-        //If chosen action is a Power UP
+        //If chosen action is a Power Up
         } else if(actionType === 'powerUp') {
             //Sets the PowerUP as active on current Character (Player or Monster), so their next Attack will be Powered Up
             this.setIsPoweredUp(true)
@@ -198,7 +198,7 @@ class GameCharacter {
 
     //Method: Player Turn - Stops if either Player or Monster HP is 0, then runs Player's chosen button action
     playerTurn(actionType, targetMonster) {
-        //If statement to check if this player's HP is 0 or target monster HP is 0
+        //Safeguard: If statement to check if this player's HP is 0 or target monster HP is 0
         if(this.checkCharacterHealth() === false || targetMonster.checkCharacterHealth() === false) {
             //Stops the turn returns false because Player or Monster is already defeated 
             return false
@@ -209,7 +209,7 @@ class GameCharacter {
 
     //Method: Monster Turn - Stops if either Player or Monster HP is 0, then picks random monster move and actions it
     monsterTurn(targetPlayer) {
-        //If statement to check if this monster's HP is 0 or target player HP is 0
+        //Safeguard: If statement to check if this monster's HP is 0 or target player HP is 0
         if(this.checkCharacterHealth() === false || targetPlayer.checkCharacterHealth() === false) {
             //Stops the turn returns false because Player or Monster is already defeated 
             return false    
@@ -230,17 +230,24 @@ class GameCharacter {
 //Player
 const player = new GameCharacter('Warrior', 120)
 //Monster 1
-const monster1 = new GameCharacter('Goblin 1', 90)
+const monster1 = new GameCharacter('Goblin 1', 15)
 //Monster 2
-const monster2 = new GameCharacter('Goblin 2', 80)
+const monster2 = new GameCharacter('Goblin 2', 15)
 //Monster 3 
-const monster3 = new GameCharacter('Goblin 3', 70)
+const monster3 = new GameCharacter('Goblin 3', 15)
 //Dungeon Boss 
-const bossMonster1 = new GameCharacter('Dungeon Boss', 200)
+const bossMonster1 = new GameCharacter('Dungeon Boss', 20)
 //Array for Monsters/Boss Objects 
 const monsters = [monster1, monster2, monster3, bossMonster1]
 
 //************************************ Functions ************************************
+//Function: Disable or Enable Player's action button on UI
+const setPlayerActionBtnDisabled = (isDisabled) => {
+    //Toggle disable state on all player's action buttons
+    charAttackSkillBtnEl.disabled = isDisabled
+    charPowerUpBtnEl.disabled = isDisabled
+    charPotionBtnEl.disabled = isDisabled 
+}
 
 //Function: Display Character Stats - Name and Health Point
 const renderPlayerStats = () => {
@@ -274,26 +281,33 @@ const checkBattleEnded = () => {
     if(player.checkCharacterHealth() === false) {
         //Boolean - Game Over no more turns
         gameOver = true 
-        //Log Player defeat message to battle log 
+        //Disable Player's action buttons if game is over
+        setPlayerActionBtnDisabled(true)
+        //Display Monster's action display to show battle has ended
+        monsterActionDisplayEl.textContent = `${monster.getName()} has won the battle!`
+
+        //Display Player defeat message to battle log 
         battleLogEl.innerHTML += `<p>${player.getName()} has been defeated!</p>`
-        //Log Game Over
-        console.log('Game Over - Player has been defeated!')
         //Stop checking function 
         return 
     }
 
     //Check if the current monster's health is 0 
     if(monster.checkCharacterHealth() === false) {
-        //Log that this monster was in the battle log
+        //Display Monster's action display to show current monster was defeated
+        monsterActionDisplayEl.textContent = `${monster.getName()} was defeated!`
+        //Display that this monster was defeated in the battle log
         battleLogEl.innerHTML += `<p>${monster.getName()} has been defeated!</p>`
 
         //Check if there are remaining Monsters in the Monsters Array
         if(currentMonsterIndex < monsters.length - 1) {
             //Move to the next monster
             currentMonsterIndex++
-            //Update monster name and HP on screen by calling fucntion
+            //Update monster Name and HP on UI
             renderMonsterStats()
-            //Announce the next Monster in the battle log
+            //Display new monster is ready in Monster's action display
+            monsterActionDisplayEl.textContent = `${getCurrentMonster().getName()} is waiting for your move.`
+            //Display the next Monster in the battle log
             battleLogEl.innerHTML += `<p>${getCurrentMonster().getName()} has spawned!</p>`
         } else {
             //No remaining Monsters are available and Player has won
@@ -304,23 +318,121 @@ const checkBattleEnded = () => {
     }
 }
 
-//Function: Monsters takes it turn after a short delay
+//Function: Monster's takes its turn after a short delay
+const handleMonsterTurn = () => {
+    //Get the monster active in battle 
+    let monster = getCurrentMonster()
+
+    //Safeguard: Stop if game is over or either Player or Monster has 0 HP
+    if(gameOver === true || monster.checkCharacterHealth() === false || player.checkCharacterHealth() === false) {
+        //Reset turn lock flag 
+        isMonsterTurnActive = false
+        //Disable Player's action buttons if game is over
+        setPlayerActionBtnDisabled(gameOver === true)
+        return
+    }
+
+    //Lock Player turn while Monster prepares its action
+    isMonsterTurnActive = true 
+    //Disable Player's action button during monster's turn
+    setPlayerActionBtnDisabled(true)
+    //Display monster turn status in Monster action display
+    monsterActionDisplayEl.textContent = `${monster.getName()} is choosing a move...`
+
+    //Wait for 1 second before taking monster's turn 
+    setTimeout(() => {
+        //Safeguard: stop if game is over or either Player or Monster HP is 0 after 1 second delay
+        if(gameOver === true || monster.checkCharacterHealth() === false || player.checkCharacterHealth() === false) {
+            //Monster turn is completed, unlock player actions
+            isMonsterTurnActive = false 
+            //Disable Player's action buttons if game is over
+            setPlayerActionBtnDisabled(gameOver === true)
+            return 
+        }
+
+        //Execute Monster's turn against player and store boolean result
+        let monsterActed = monster.monsterTurn(player)
+
+        //Update UI and log if Monster acted 
+        if(monsterActed === true) {
+            //Update Player's & Monsters HP on UI
+            renderPlayerStats()
+            renderMonsterStats()
+
+            //Display Monster's action in Monster action display
+            monsterActionDisplayEl.textContent = `${monster.getName()} attacked ${player.getName()}`
+
+            //Display Monster action detail in battle log 
+            battleLogEl.innerHTML += `<p>${monster.getName()} took turn against ${player.getName()}, Player's HP: ${player.getHP()}</p>`
+        } else {
+            //Display when monster did not take an action 
+            monsterActionDisplayEl.textContent = `${monster.getName()} did nothing.`
+
+            //Display Monster's inactivity in battle log 
+            battleLogEl.innerHTML += `<p>${monster.getName()} could not act this turn.</p>`
+        }
+
+        //Check if battle has ended after Monster's turn
+        checkBattleEnded()
+        //Monster's turn completed, unlock Player actions
+        isMonsterTurnActive = false 
+        //Disable Player's action buttons if game is over
+        setPlayerActionBtnDisabled(gameOver === true)
+
+    }, 1000)
+}
 
 //Function: Handle player button click 
+const handlePlayerTurn = (actionType) => {
+    //Get the Monster active in battle 
+    let monster = getCurrentMonster()
 
+    //Safeguard: Stop if game is over or monster turn is active 
+    if(gameOver === true || isMonsterTurnActive === true) {
+        return 
+    }
+
+    //Safeguard: Stop if Player or Monster HP is 0
+    if(player.checkCharacterHealth() === false || monster.checkCharacterHealth() === false) {
+        return 
+    }
+
+    //Execute Player's selected action & store boolean result
+    let playerActed = player.playerTurn(actionType, monster)
+
+    //Safeguard - Stop if action could not be executed
+    if (playerActed !== true) {
+        return 
+    } 
+
+    //Update Player and Monster Name & HP on UI
+    renderPlayerStats()
+    renderMonsterStats()
+
+    //Display Player action to battle log based on move - needs update...
+    battleLogEl.innerHTML += `<p>${player.getName()} has used ${actionType} on ${monster.getName()}.</p>`
+
+    //Check if battle has ended after Player's action
+    checkBattleEnded()
+
+    //Continue Monster turn if the game is still active 
+    if(gameOver === false) {
+        handleMonsterTurn()
+    }
+}
 
 //************************************ Event Listeners ************************************
 //Event Listener: Player Attack Skill Button Clicked
 charAttackSkillBtnEl.addEventListener('click', () => {
-
+    handlePlayerTurn('attack')
 })
 
 //Event Listener: Player Power Up Skill Button Clicked
 charPowerUpBtnEl.addEventListener('click', () => {
-
+    handlePlayerTurn('powerUp')
 })
 
 //Event Listener: Player Healing Potion Button Clicked 
 charPotionBtnEl.addEventListener('click', () => {
-
+    handlePlayerTurn('potion')
 })
