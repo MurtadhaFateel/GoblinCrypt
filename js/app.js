@@ -92,7 +92,7 @@ class GameCharacter {
     attack() {
         //Boolean to check if character is Alive
         let isAlive = this.checkCharacterHealth()
-        //Return 0 Damage if Character is defeated (0 HP)
+        //If HP is 0 or less than 0, Stops and returns 0 Damage (Character Defeated)
         if(isAlive === false) {
             return 0 
         }
@@ -129,13 +129,14 @@ class GameCharacter {
             receivedDamage = 0
         }
 
-        //Current Character HP 
+        //Current Character (Player or Monster) HP 
         let currentHP = this.getHP()
         //Updated Character HP after receiving damage
         let updatedHP = currentHP-receivedDamage
 
-        //Safe Guard if Character HP goes below 0
+        //Safe Guard if Character (Player or Monster) HP goes below 0
         if(updatedHP < 0) {
+            //If HP less than 0 then assign value to 0 to prevent going into negative value
             updatedHP = 0
         }
 
@@ -160,43 +161,80 @@ class GameCharacter {
         healingAmountPotion = playerCurrentHP + healingAmountPotion
         this.setHP(healingAmountPotion)
         return healingAmountPotion
-    }  
+    }
+
+    //Method: Executed Actions - checks the chosen actionType string ('attack', 'powerUp' or 'potion') to decide which character (Player or Monster) move to execute (against target when attacking) 
+    executedActions(actionType, target) {
+        //Boolean Acted Turn (True if valid move executed, else false)
+        let  actedTurn = false
+        //If chosen action is an Attack
+        if(actionType === 'attack') {
+            //Calculates how much damage this character (Player or Monster) deals (Including PowerUp)
+            let damage = this.attack()
+            //Applies the damage to the targeted character's (Player or Monster) HP 
+            target.takeDamage(damage)
+            //Valid turn recorded 
+            actedTurn = true
+        //If chosen action is a Power UP
+        } else if(actionType === 'powerUp') {
+            //Sets the PowerUP as active on current Character (Player or Monster), so their next Attack will be Powered Up
+            this.setIsPoweredUp(true)
+            //Valid turn recorded 
+            actedTurn = true
+        //If chosen action is a Healing Potion 
+        } else if(actionType === 'potion') {
+            //Heals this character (Player or Monster) using Healing Potion
+            this.getHealingPotionAmount()
+            //Valid turn recorded
+            actedTurn = true
+        }
+        //Returns true if valid action taken, else false turn
+        return actedTurn
+    }
+
+    //Method: Player Turn - Stops if either Player or Monster HP is 0, then runs Player's chosen button action
+    playerTurn(actionType, targetMonster) {
+        //If statement to check if this player's HP is 0 or target monster HP is 0
+        if(this.checkCharacterHealth() === false || targetMonster.checkCharacterHealth() === false) {
+            //Stops the turn returns false because Player or Monster is already defeated 
+            return false
+        }
+        //Executes the player's chosen action against targeted Monster and returns actedTurn from executedActions (True or False)
+        return this.executedActions(actionType, targetMonster)
+    }
+
+    //Method: Monster Turn - Stops if either Player or Monster HP is 0, then picks random monster move and actions it
+    monsterTurn(targetPlayer) {
+        //If statement to check if this monster's HP is 0 or target player HP is 0
+        if(this.checkCharacterHealth() === false || targetPlayer.checkCharacterHealth() === false) {
+            //Stops the turn returns false because Player or Monster is already defeated 
+            return false    
+        }
+
+        //Monster Randomized Actions List 
+        let monsterActions = ['attack', 'powerUp', 'potion']
+        //Generates random index from monsterActions Array
+        let randomIndex = Math.floor(Math.random() * monsterActions.length)
+        //Select random monster action based on the index
+        let randomMonsterAction = monsterActions[randomIndex]
+        //Executes Monster's random chosen action against target player and returns actedTurn from executedActions (True or False)
+        return this.executedActions(randomMonsterAction, targetPlayer)
+    }
 }
 
 //Characters and Monsters Objects
 //Player
 const player = new GameCharacter('Warrior', 120)
-// console.log(player)
 //Monster 1
-const monster1 = new GameCharacter('Goblin 1')
-// console.log(monster1)
+const monster1 = new GameCharacter('Goblin 1', 90)
 //Monster 2
-const monster2 = new GameCharacter('Goblin 2')
-// console.log(monster2)
+const monster2 = new GameCharacter('Goblin 2', 80)
 //Monster 3 
-const monster3 = new GameCharacter('Goblin 3')
-// console.log(monster3)
+const monster3 = new GameCharacter('Goblin 3', 70)
 //Dungeon Boss 
 const bossMonster1 = new GameCharacter('Dungeon Boss', 200)
-// console.log(bossMonster1)
 //Array for Monsters/Boss Objects 
 const monsters = [monster1, monster2, monster3, bossMonster1]
-
-//Test Player Take Damage
-// player.takeDamage(40)
-// console.log(`Player HP after taking damage: ${player.getHP()}`)
-//Test Monster 1 Take Damage
-// monsters[0].takeDamage(10)
-// console.log(`${monsters[0].getName()} HP after taking Damage: ${monsters[0].getHP()}`)
-//Monster 2
-// monsters[1].takeDamage(10)
-// console.log(`${monsters[1].getName()} HP after taking Damage: ${monsters[1].getHP()}`)
-//Monster 3
-// monsters[2].takeDamage(10)
-// console.log(`${monsters[2].getName()} HP after taking Damage: ${monsters[2].getHP()}`)
-//Monster 4 Boss
-// monsters[3].takeDamage(10)
-// console.log(`${monsters[3].getName()} HP after taking Damage: ${monsters[3].getHP()}`)
 
 //************************************ Functions ************************************
 
@@ -244,6 +282,3 @@ charPotionBtnEl.addEventListener('click', () => {
     charHPEl.textContent = player.getHP()
     console.log(`Player: ${player.getName()} has has used a potion and healed for amount: ${healingPotion}. Total Health Point: ${healingAmountPotion}`)
 })
-
-
-
