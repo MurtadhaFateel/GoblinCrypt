@@ -154,8 +154,13 @@ class GameCharacter {
     }
 
     //Method: Calculate Healing Potion
-    
-
+    getHealingPotionAmount() {
+        let playerCurrentHP = this.getHP()
+        let healingAmountPotion = this.getPotion()
+        healingAmountPotion = playerCurrentHP + healingAmountPotion
+        this.setHP(healingAmountPotion)
+        return healingAmountPotion
+    }  
 }
 
 //Characters and Monsters Objects
@@ -234,7 +239,10 @@ charPowerUpBtnEl.addEventListener('click', () => {
 
 //Event Listener: Player Healing Potion Button Clicked 
 charPotionBtnEl.addEventListener('click', () => {
-
+    let healingAmountPotion = player.getHealingPotionAmount()
+    let healingPotion = player.getPotion()
+    charHPEl.textContent = player.getHP()
+    console.log(`Player: ${player.getName()} has has used a potion and healed for amount: ${healingPotion}. Total Health Point: ${healingAmountPotion}`)
 })
 
 
