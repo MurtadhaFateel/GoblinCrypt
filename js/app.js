@@ -21,8 +21,12 @@ let monsterActionDisplayEl = document.querySelector('#monsterActionDisplay')
 let battleLogEl = document.querySelector('#battleLog')
 
 //*************************************************** Variables ***************************************************
+//Game is not over
 let gameOver = false
+//Monster's turn is not active
 let isMonsterTurnActive = false 
+//Monster's chosen action
+let monsterActionType = null 
 
 //*************************************************** Classes ***************************************************
 //Game Character (Player or Monster or Boss Monster) class with stats: Name, HP, Attack Skill, Power Up Skill, Power Up Skill Active/Inactive, Healing Potion 
@@ -160,9 +164,13 @@ class GameCharacter {
 
     //Method: Calculate Healing Potion
     getHealingPotionAmount() {
-        let playerCurrentHP = this.getHP()
+        //Character's current HP
+        let currentHP = this.getHP()
+        //Character's Healing Potion 
         let healingAmountPotion = this.getPotion()
-        healingAmountPotion = playerCurrentHP + healingAmountPotion
+        //Replenish Character's HP wtih Potion
+        healingAmountPotion = currentHP + healingAmountPotion
+        //Set Character's new HP after healing
         this.setHP(healingAmountPotion)
         return healingAmountPotion
     }
@@ -221,6 +229,8 @@ class GameCharacter {
         let randomIndex = Math.floor(Math.random() * monsterActions.length)
         //Select random monster action based on the index
         let randomMonsterAction = monsterActions[randomIndex]
+        //Store Monster chosen action 
+        monsterActionType = randomMonsterAction
         //Executes Monster's random chosen action against target player and returns actedTurn from executedActions (True or False)
         return this.executedActions(randomMonsterAction, targetPlayer)
     }
@@ -230,11 +240,11 @@ class GameCharacter {
 //Player
 const player = new GameCharacter('Warrior', 120)
 //Monster 1
-const monster1 = new GameCharacter('Goblin 1', 15)
+const monster1 = new GameCharacter('Goblin 1', 20)
 //Monster 2
-const monster2 = new GameCharacter('Goblin 2', 15)
+const monster2 = new GameCharacter('Goblin 2', 20)
 //Monster 3 
-const monster3 = new GameCharacter('Goblin 3', 15)
+const monster3 = new GameCharacter('Goblin 3', 20)
 //Dungeon Boss 
 const bossMonster1 = new GameCharacter('Dungeon Boss', 20)
 //Array for Monsters/Boss Objects 
@@ -288,7 +298,6 @@ const checkBattleEnded = () => {
 
         //Display Player defeat message to battle log 
         battleLogEl.innerHTML += `<p>${player.getName()} has been defeated!</p>`
-        //Stop checking function 
         return 
     }
 
@@ -296,6 +305,7 @@ const checkBattleEnded = () => {
     if(monster.checkCharacterHealth() === false) {
         //Display Monster's action display to show current monster was defeated
         monsterActionDisplayEl.textContent = `${monster.getName()} was defeated!`
+
         //Display that this monster was defeated in the battle log
         battleLogEl.innerHTML += `<p>${monster.getName()} has been defeated!</p>`
 
@@ -312,6 +322,8 @@ const checkBattleEnded = () => {
         } else {
             //No remaining Monsters are available and Player has won - Game Over - battle has ended
             gameOver = true 
+            //Disable Player's action buttons
+            setPlayerActionBtnDisabled(true)
             //Victory message to battle log
             battleLogEl.innerHTML += `<p>You have defeated every monster, Victory!</p>`
         }
@@ -350,6 +362,9 @@ const handleMonsterTurn = () => {
             return 
         }
 
+        //Check if Monster is Powered Up before turn
+        let isMonsterPoweredUp = monster.getIsPoweredUp()
+
         //Execute Monster's turn against player and store boolean result
         let monsterActed = monster.monsterTurn(player)
 
@@ -359,11 +374,35 @@ const handleMonsterTurn = () => {
             renderPlayerStats()
             renderMonsterStats()
 
-            //Display Monster's action in Monster action display
-            monsterActionDisplayEl.textContent = `${monster.getName()} attacked ${player.getName()}`
+            //Display Monster's action in Monster action display and battle log
+            if(monsterActionType === 'attack') {
+                let monsterDmg = monster.getAttackSkill()
 
-            //Display Monster action detail in battle log 
-            battleLogEl.innerHTML += `<p>${monster.getName()} took turn against ${player.getName()}, Player's HP: ${player.getHP()}</p>`
+                if(isMonsterPoweredUp === true) {
+                    monsterDmg = monster.getPoweredUpAttackDmg()
+                    //Display Monster Powered Up Attack
+                    monsterActionDisplayEl.textContent = `${monster.getName()} used a powered up attack`
+                    
+                    battleLogEl.innerHTML += `<p>${monster.getName()} used a powered up attack on ${player.getName()} for total damage: ${monsterDmg} against ${player.getName()} HP: ${player.getHP()}.</p>`
+                } else {
+                    //Display Monster Normal Attack
+                    monsterActionDisplayEl.textContent = `${monster.getName()} attacked.`
+                    
+                    battleLogEl.innerHTML +=`<p>${monster.getName()} attacked ${player.getName()} for total damage: ${monsterDmg} against ${player.getName()} HP: ${player.getHP()}.</p>`
+                }
+            } else if (monsterActionType === 'powerUp') {
+                //Display Monster Power Up
+                monsterActionDisplayEl.textContent = `${monster.getName()} used a Power Up.`
+
+                battleLogEl.innerHTML += `<p>${monster.getName()} used a Power Up ${monster.getPowerUp()}x next attack ${monster.getPoweredUpAttackDmg()} damage.</p>`
+
+            } else if (monsterActionType === 'potion') {
+                //Display Monster Healing Potion
+                monsterActionDisplayEl.textContent = `${monster.getName()} used a potion.`
+
+                battleLogEl.innerHTML += `<p>${monster.getName()} healed ${monster.getPotion()} HP with potion. Current HP: ${monster.getHP()}.</p>`
+            }
+
         } else {
             //Display when monster did not take an action 
             monsterActionDisplayEl.textContent = `${monster.getName()} did nothing.`
@@ -417,10 +456,11 @@ const handlePlayerTurn = (actionType) => {
         let playerDmg = player.getAttackSkill()
         if(isPlayerPoweredUp === true) {
             playerDmg = player.getPoweredUpAttackDmg()
+            
             //Display battle log Player Powered Up Attack
             battleLogEl.innerHTML += `<p>${player.getName()} used a powered up attack on ${monster.getName()} for total damage: ${playerDmg} against ${monster.getName()} HP: ${monster.getHP()}.</p>`
         } else {
-            //Dispaly battle log Player Normal Attack 
+            //Display battle log Player Normal Attack 
             battleLogEl.innerHTML += `<p>${player.getName()} attacked ${monster.getName()} for total damage: ${playerDmg} against ${monster.getName()} HP: ${monster.getHP()}.</p>`
         }
 
@@ -428,7 +468,7 @@ const handlePlayerTurn = (actionType) => {
         //Display battle log Player used Power Up for next Attack
         battleLogEl.innerHTML += `<p>${player.getName()} used a Power Up ${player.getPowerUp()}x next attack ${player.getPoweredUpAttackDmg()} damage.</p>`
     } else if (actionType === 'potion') {
-        //Dispaly battle log Player used Healing Potion 
+        //Display battle log Player used Healing Potion 
         battleLogEl.innerHTML += `<p>${player.getName()} healed ${player.getPotion()} HP with potion. Current HP: ${player.getHP()}.</p>`
     }
 
@@ -437,7 +477,10 @@ const handlePlayerTurn = (actionType) => {
 
     //Continue Monster turn if the game is not over
     if(gameOver === false) {
-        handleMonsterTurn()
+        //Monster take its turn if alive
+        if(monster.checkCharacterHealth() === true){
+            handleMonsterTurn()
+        }
     }
 }
 
