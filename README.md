@@ -15,3 +15,16 @@ Goal: The player should kill the boss by reaching their health to 0 and win the 
 
 Start: 16/Nov/2026
 End: 24/Nov/2026
+
+### CSS Credits
+# 🧌 Goblin's Crypt — Retro RPG CSS Theme
+
+> 🎨 **CSS Styling & Theme Design:** Created with assistance from [ChatGPT](https://chatgpt.com/), including the color palette, typography, button styling, hover effects, transitions, and glow effects.
+
+A dark, playful, retro RPG-inspired theme featuring dungeon aesthetics, goblin-inspired colors, pixel typography, and toxic green magical accents.
+
+**Theme:** Retro RPG / Dark Fantasy  
+**Colors:** Purple · Black · Toxic Green  
+**Fonts:** Press Start 2P · VT323 · Silkscreen
+
+---
