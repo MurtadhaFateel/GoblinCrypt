@@ -3,40 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player Vs Monster</title>
+    <title>Goblin's Crypt</title>
     <link rel="stylesheet" href="./css/gamestyle.css">
     <script src="./js/app.js" defer></script>
     <a href="./html/gameInstructions.html">Game Instructions</a>
 </head>
 <body>
     <main class="container">
-
         <div id="charcterAction" class="display">
             <h3 id="charName">Character Name</h3>
-            
-            <p id="charHP"></p>
 
-            <!-- <div id="playerSprite" class="characterSprite"></div> -->
-
-            <div class="btnContainer">
-                <button id="charAttackSkill">
-                    Attack Skill
-                </button>
+            <div class="bottomSection">
+                <p id="charHP"></p>
                 
-                <button id="charPowerUp">
-                    Power Up
-                </button>
+                <!-- <div id="playerSprite" class="characterSprite"></div> -->
                 
-                <button id="charPotion">
-                    Healing Potion
-                </button>
+                <div class="btnContainer">
+                    <button id="charAttackSkill">
+                        Attack Skill
+                    </button>
+                    
+                    <button id="charPowerUp">
+                        Power Up
+                    </button>
+                    
+                    <button id="charPotion">
+                        Healing Potion
+                    </button>
+                </div>
             </div>
         </div>
         
         <div id="monsterAction" class="display">
             <h3 id="monsterName"></h3>
-            <p id="monsterHP"></p>
-            <label >Monster Action: </label> <label id="monsterActionDisplay"></label>
+
+            <div class="bottomSection">
+                <p id="monsterHP"></p>
+                
+                <!-- <div id="monsterSprite" class="characterSprite"></div> -->
+                
+                <label >Monster Action: </label> 
+                <label id="monsterActionDisplay"></label>
+            </div>
         </div>
 
         <div id="battleLog" class="display">

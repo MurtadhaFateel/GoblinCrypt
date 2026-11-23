@@ -77,10 +77,13 @@ button:hover {
     display: flex;
     gap: 15px;
     justify-content: center;
-    min-width: 75vw;
+    align-items: center;
+    /* min-width: 75vw; */
+    min-height: 100vh;
 }
 .display {
-    border: 5px solid black;
+    background: var(--bg-section);
+    border: 5px solid var(--purple);
     padding: 10px;
     gap: 10px;
     min-width: 25vw;
@@ -102,4 +105,15 @@ button:hover {
 
 #battleLogMessages::-webkit-scrollbar {
     display: none;
+}
+
+/* Game instructions link */
+a {
+    color: var(--toxic);
+    font-family: var(--font-ui);
+    font-size: 14px;
+}
+
+a:hover {
+    color: var(--purple-light);
 }

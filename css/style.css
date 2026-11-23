@@ -68,3 +68,58 @@ h2 {
     margin-bottom: 40px;
 }
 
+#GameInstructions {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+
+    background: var(--bg-section);
+    border: var(--border);
+
+    box-shadow: 8px 8px 0 #07050B;
+}
+
+/* Instructions list */
+
+#InstructionsList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#InstructionsList li {
+    background: var(--bg-card);
+    border-left: 4px solid var(--goblin);
+
+    padding: 18px 20px;
+    margin-bottom: 15px;
+
+    line-height: 1.5;
+    transition: 0.2s ease;
+}
+
+#InstructionsList li:hover {
+    border-left-color: var(--toxic);
+    background: #342743;
+
+    transform: translateX(5px);
+    box-shadow: var(--glow-green);
+}
+
+/* Back to game link */
+
+a {
+    display: inline-block;
+
+    color: var(--toxic);
+    font-family: var(--font-ui);
+    font-size: 14px;
+
+    text-decoration: underline;
+    transition: 0.2s ease;
+}
+
+a:hover {
+    color: var(--purple-light);
+    text-shadow: var(--glow-purple);
+}
