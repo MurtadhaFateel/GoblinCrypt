@@ -1,0 +1,39 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&family=VT323&display=swap');
+
+:root {
+  /* Background */
+  --bg-main: #0C0912;
+  --bg-section: #1A1226;
+  --bg-card: #292035;
+
+  /* Purple */
+  --purple: #693BA0;
+  --purple-light: #B77AFF;
+
+  /* Green */
+  --toxic: #A3FF12;
+  --goblin: #5B9F35;
+
+  /* Text */
+  --text: #E9E0D0;
+  --muted: #9B91A8;
+
+  /* Fonts */
+  --font-heading: 'Press Start 2P', monospace;
+  --font-body: 'VT323', monospace;
+  --font-ui: 'Silkscreen', monospace;
+
+  /* Effects */
+  --glow-green: 0 0 15px #A3FF1266;
+  --glow-purple: 0 0 15px #B77AFF55;
+
+  --border: 3px solid var(--purple);
+}
+
+/* GLOBAL */
+
+* {
+  box-sizing: border-box;
+}
+
