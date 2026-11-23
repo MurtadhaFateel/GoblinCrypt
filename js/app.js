@@ -18,7 +18,7 @@ let monsterHPEl = document.querySelector('#monsterHP')
 let monsterActionDisplayEl = document.querySelector('#monsterActionDisplay')
 
 //Battle Log 
-let battleLogEl = document.querySelector('#battleLog')
+let battleLogEl = document.querySelector('#battleLogMessages')
 
 //*************************************************** Variables ***************************************************
 //Game is not over
@@ -298,6 +298,8 @@ const checkBattleEnded = () => {
 
         //Display Player defeat message to battle log 
         battleLogEl.innerHTML += `<p>${player.getName()} has been defeated!</p>`
+        //Auto scroll to show latest battle log 
+        battleLogMsgScroll()
         return 
     }
 
@@ -308,6 +310,8 @@ const checkBattleEnded = () => {
 
         //Display that this monster was defeated in the battle log
         battleLogEl.innerHTML += `<p>${monster.getName()} has been defeated!</p>`
+        //Auto scroll to show latest battle log 
+        battleLogMsgScroll()
 
         //Check if there are remaining Monsters in the Monsters Array
         if(currentMonsterIndex < monsters.length - 1) {
@@ -319,6 +323,8 @@ const checkBattleEnded = () => {
             monsterActionDisplayEl.textContent = `${getCurrentMonster().getName()} is waiting for your move.`
             //Display the next Monster in the battle log
             battleLogEl.innerHTML += `<p>${getCurrentMonster().getName()} has spawned!</p>`
+            //Auto scroll to show latest battle log 
+            battleLogMsgScroll()
         } else {
             //No remaining Monsters are available and Player has won - Game Over - battle has ended
             gameOver = true 
@@ -326,6 +332,8 @@ const checkBattleEnded = () => {
             setPlayerActionBtnDisabled(true)
             //Victory message to battle log
             battleLogEl.innerHTML += `<p>You have defeated every monster, Victory!</p>`
+            //Auto scroll to show latest battle log 
+            battleLogMsgScroll()
         }
     }
 }
@@ -384,23 +392,31 @@ const handleMonsterTurn = () => {
                     monsterActionDisplayEl.textContent = `${monster.getName()} used a powered up attack`
                     //Add Comment Here ***********
                     battleLogEl.innerHTML += `<p>${monster.getName()} used a powered up attack on ${player.getName()} for total damage: ${monsterDmg} against ${player.getName()} HP: ${player.getHP()}.</p>`
+                    //Auto scroll to show latest battle log 
+                    battleLogMsgScroll()
                 } else {
                     //Display Monster Normal Attack
                     monsterActionDisplayEl.textContent = `${monster.getName()} attacked.`
                     //Add Comment Here ***********
                     battleLogEl.innerHTML +=`<p>${monster.getName()} attacked ${player.getName()} for total damage: ${monsterDmg} against ${player.getName()} HP: ${player.getHP()}.</p>`
+                    //Auto scroll to show latest battle log 
+                    battleLogMsgScroll()
                 }
             } else if (monsterActionType === 'powerUp') {
                 //Display Monster Power Up
                 monsterActionDisplayEl.textContent = `${monster.getName()} used a Power Up.`
                 //Add Comment Here ***********
                 battleLogEl.innerHTML += `<p>${monster.getName()} used a Power Up ${monster.getPowerUp()}x next attack ${monster.getPoweredUpAttackDmg()} damage.</p>`
+                //Auto scroll to show latest battle log 
+                battleLogMsgScroll()
 
             } else if (monsterActionType === 'potion') {
                 //Display Monster Healing Potion
                 monsterActionDisplayEl.textContent = `${monster.getName()} used a potion.`
                 //Add Comment Here ***********
                 battleLogEl.innerHTML += `<p>${monster.getName()} healed ${monster.getPotion()} HP with potion. Current HP: ${monster.getHP()}.</p>`
+                //Auto scroll to show latest battle log 
+                battleLogMsgScroll()
             }
 
         } else {
@@ -409,6 +425,8 @@ const handleMonsterTurn = () => {
 
             //Display Monster's inactivity in battle log 
             battleLogEl.innerHTML += `<p>${monster.getName()} could not act this turn.</p>`
+            //Auto scroll to show latest battle log 
+            battleLogMsgScroll()
         }
 
         //Check if battle has ended after Monster's turn
@@ -460,17 +478,25 @@ const handlePlayerTurn = (actionType) => {
             
             //Display battle log Player Powered Up Attack
             battleLogEl.innerHTML += `<p>${player.getName()} used a powered up attack on ${monster.getName()} for total damage: ${playerDmg} against ${monster.getName()} HP: ${monster.getHP()}.</p>`
+            //Auto scroll to show latest battle log 
+            battleLogMsgScroll()
         } else {
             //Display battle log Player Normal Attack 
             battleLogEl.innerHTML += `<p>${player.getName()} attacked ${monster.getName()} for total damage: ${playerDmg} against ${monster.getName()} HP: ${monster.getHP()}.</p>`
+            //Auto scroll to show latest battle log 
+            battleLogMsgScroll()
         }
 
     } else if (actionType === 'powerUp') {
         //Display battle log Player used Power Up for next Attack
         battleLogEl.innerHTML += `<p>${player.getName()} used a Power Up ${player.getPowerUp()}x next attack ${player.getPoweredUpAttackDmg()} damage.</p>`
+        //Auto scroll to show latest battle log 
+        battleLogMsgScroll()
     } else if (actionType === 'potion') {
         //Display battle log Player used Healing Potion 
         battleLogEl.innerHTML += `<p>${player.getName()} healed ${player.getPotion()} HP with potion. Current HP: ${player.getHP()}.</p>`
+        //Auto scroll to show latest battle log 
+        battleLogMsgScroll()
     }
 
     //Check if battle has ended after Player's action
@@ -483,6 +509,12 @@ const handlePlayerTurn = (actionType) => {
             handleMonsterTurn()
         }
     }
+}
+
+//Function: Auto-Scroll Battle Log Messages
+const battleLogMsgScroll = () => {
+    //Auto scroll to the bottom to show latest battle log message
+    battleLogEl.scrollTop = battleLogEl.scrollHeight
 }
 
 //************************************ Event Listeners ************************************

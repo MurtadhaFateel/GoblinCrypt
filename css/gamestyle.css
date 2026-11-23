@@ -45,6 +45,13 @@ body {
   font-size: 22px;
 }
 
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  line-height: 1.8;
+  color: var(--toxic);
+  text-align: center;
+}
+
 button {
   background: var(--toxic);
   color: var(--bg-main);
@@ -72,8 +79,6 @@ button:hover {
     justify-content: center;
     min-width: 75vw;
 }
-
-/*  */
 .display {
     border: 5px solid black;
     padding: 10px;
@@ -85,9 +90,16 @@ button:hover {
 }
 
 #battleLog {
-    overflow: auto;
-    scrollbar-width: none;
-    display: flex;
-    flex-direction: column-reverse;
+    overflow: hidden;
 }
 
+#battleLogMessages {
+    height: 65vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+}
+
+#battleLogMessages::-webkit-scrollbar {
+    display: none;
+}
