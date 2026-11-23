@@ -21,9 +21,9 @@ let monsterActionDisplayEl = document.querySelector('#monsterActionDisplay')
 let battleLogEl = document.querySelector('#battleLogMessages')
 
 //Character Sprite 
-
+let playerSpriteEl = document.querySelector('#playerSprite')
 //Monster/Boss Sprite 
-
+let monsterSpriteEl = document.querySelector('#monsterSprite')
 
 //*************************************************** Variables ***************************************************
 //Game is not over
@@ -420,13 +420,22 @@ const handleMonsterTurn = () => {
 
                     //Display Monster Powered Up Attck in battlel logs
                     battleLogEl.innerHTML += `<p>${monster.getName()} used a powered up attack on ${player.getName()} for total damage: ${monsterDmg} against ${player.getName()} HP: ${player.getHP()}.</p>`
+
+                    //Update Goblin Monster's Sprite to Powered Up Attck Skill
+                    monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-powered-attack.png')"
                 } else {
                     //Display Monster Normal Attack
                     monsterActionDisplayEl.textContent = `${monster.getName()} attacked.`
 
                     //Display Monster Normal Attack in Battle Log
                     battleLogEl.innerHTML +=`<p>${monster.getName()} attacked ${player.getName()} for total damage: ${monsterDmg} against ${player.getName()} HP: ${player.getHP()}.</p>`
+
+                    //Update Goblin Monster's Sprite to Attck Skill
+                    monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-attack.png')"
                 }
+                //Wait for 1.65 seconds before updating Goblin Monster to idle 
+                setTimeout(()=>{monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"}, 1650)
+
                 //Auto scroll to show latest battle log 
                 battleLogMsgScroll()
             } else if (monsterActionType === 'powerUp') {
@@ -436,9 +445,13 @@ const handleMonsterTurn = () => {
                 //Display Monster Power Up in Battle Log
                 battleLogEl.innerHTML += `<p>${monster.getName()} used a Power Up ${monster.getPowerUp()}x next attack ${monster.getPoweredUpAttackDmg()} damage.</p>`
 
+                //Update Goblin Monster's Sprite to Power Up
+                monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-powerup.png')"
+                //Wait for 1.65 seconds before updating Goblin Monster to idle 
+                setTimeout(()=>{monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"}, 1650)
+
                 //Auto scroll to show latest battle log 
                 battleLogMsgScroll()
-
             } else if (monsterActionType === 'potion') {
                 //Check if Monster already has full HP
                 if(isMonsterHPFull === true) {
@@ -453,7 +466,12 @@ const handleMonsterTurn = () => {
 
                     //Display Monster Healing Potion in Battle Log
                     battleLogEl.innerHTML += `<p>${monster.getName()} healed ${monster.getHP() - monsterHPBeforeHealingAction} HP with potion. Current HP: ${monster.getHP()}.</p>`
+
+                    //Update Goblin Monster's Sprite to Healing Potion
+                    monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-healing.png')"
                 }
+                //Wait for 1.65 seconds before updating Goblin Monster to idle 
+                setTimeout(()=>{monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"}, 1650)
                 //Auto scroll to show latest battle log 
                 battleLogMsgScroll()
             }
@@ -523,16 +541,28 @@ const handlePlayerTurn = (actionType) => {
             
             //Display battle log Player Powered Up Attack
             battleLogEl.innerHTML += `<p>${player.getName()} used a powered up attack on ${monster.getName()} for total damage: ${playerDmg} against ${monster.getName()} HP: ${monster.getHP()}.</p>`
+
+            //Update Player's Sprite to Powered Up Attck Skill
+            playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-powered-attack.png')"
         } else {
             //Display battle log Player Normal Attack 
             battleLogEl.innerHTML += `<p>${player.getName()} attacked ${monster.getName()} for total damage: ${playerDmg} against ${monster.getName()} HP: ${monster.getHP()}.</p>`
+
+            //Update Player's Sprite to Attck Skill
+            playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-attack.png')"
         }
+        //Wait for 1.65 seconds before updating Player's to idle 
+        setTimeout(()=>{playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-idle.png')"}, 1650)
         //Auto scroll to show latest battle log 
         battleLogMsgScroll()
-
     } else if (actionType === 'powerUp') {
         //Display battle log Player used Power Up for next Attack
         battleLogEl.innerHTML += `<p>${player.getName()} used a Power Up ${player.getPowerUp()}x next attack ${player.getPoweredUpAttackDmg()} damage.</p>`
+
+        //Update Player's Sprite to Power Up
+        playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-powerup.png')"
+        //Wait for 1.65 seconds before updating Player's to idle 
+        setTimeout(()=>{playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-idle.png')"}, 1650)
 
         //Auto scroll to show latest battle log 
         battleLogMsgScroll()
@@ -544,7 +574,12 @@ const handlePlayerTurn = (actionType) => {
         } else {
             //Display battle log Player used Healing Potion 
             battleLogEl.innerHTML += `<p>${player.getName()} healed ${player.getHP() - playerHPBeforeHealingAction} HP with potion. Current HP: ${player.getHP()}.</p>`
+
+            //Update Player's Sprite to Healing Potion
+            playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-healing.png')"
         }
+        //Wait for 1.65 seconds before updating Player's to idle 
+        setTimeout(()=>{playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-idle.png')"}, 1650)
         //Auto scroll to show latest battle log 
         battleLogMsgScroll()
     }
