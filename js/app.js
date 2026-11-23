@@ -389,6 +389,9 @@ const handleMonsterTurn = () => {
         //Check if Monster is Powered Up before turn
         let isMonsterPoweredUp = monster.getIsPoweredUp()
         
+        //Get Monster HP before executing healing action
+        let monsterHPBeforeHealingAction = monster.getHP()
+
         //Check if Monster already has full HP
         let isMonsterHPFull = monster.getHP() === monster.maxHP
         
@@ -427,6 +430,7 @@ const handleMonsterTurn = () => {
 
                 //Display Monster Power Up in Battle Log
                 battleLogEl.innerHTML += `<p>${monster.getName()} used a Power Up ${monster.getPowerUp()}x next attack ${monster.getPoweredUpAttackDmg()} damage.</p>`
+                
                 //Auto scroll to show latest battle log 
                 battleLogMsgScroll()
 
@@ -441,8 +445,9 @@ const handleMonsterTurn = () => {
                 } else {
                     //Display Monster Healing Potion
                     monsterActionDisplayEl.textContent = `${monster.getName()} used a potion.`
+
                     //Display Monster Healing Potion in Battle Log
-                    battleLogEl.innerHTML += `<p>${monster.getName()} healed ${monster.getPotion()} HP with potion. Current HP: ${monster.getHP()}.</p>`
+                    battleLogEl.innerHTML += `<p>${monster.getName()} healed ${monster.getHP() - monsterHPBeforeHealingAction} HP with potion. Current HP: ${monster.getHP()}.</p>`
                 }
                 //Auto scroll to show latest battle log 
                 battleLogMsgScroll()
@@ -485,6 +490,9 @@ const handlePlayerTurn = (actionType) => {
 
     //Check if Player is Powered Up before turn
     let isPlayerPoweredUp = player.getIsPoweredUp()
+    
+    //Get Player HP before executing healing action
+    let playerHPBeforeHealingAction = player.getHP()
 
     //Check if Player already has full HP
     let isPlayerHPFull = player.getHP() === player.maxHP
@@ -520,6 +528,7 @@ const handlePlayerTurn = (actionType) => {
     } else if (actionType === 'powerUp') {
         //Display battle log Player used Power Up for next Attack
         battleLogEl.innerHTML += `<p>${player.getName()} used a Power Up ${player.getPowerUp()}x next attack ${player.getPoweredUpAttackDmg()} damage.</p>`
+
         //Auto scroll to show latest battle log 
         battleLogMsgScroll()
     } else if (actionType === 'potion') {
@@ -529,7 +538,7 @@ const handlePlayerTurn = (actionType) => {
             battleLogEl.innerHTML += `<p>${player.getName()} already has full HP!</p>`
         } else {
             //Display battle log Player used Healing Potion 
-            battleLogEl.innerHTML += `<p>${player.getName()} healed ${player.getPotion()} HP with potion. Current HP: ${player.getHP()}.</p>`
+            battleLogEl.innerHTML += `<p>${player.getName()} healed ${player.getHP() - playerHPBeforeHealingAction} HP with potion. Current HP: ${player.getHP()}.</p>`
         }
         //Auto scroll to show latest battle log 
         battleLogMsgScroll()
