@@ -20,6 +20,11 @@ let monsterActionDisplayEl = document.querySelector('#monsterActionDisplay')
 //Battle Log 
 let battleLogEl = document.querySelector('#battleLogMessages')
 
+//Character Sprite 
+
+//Monster/Boss Sprite 
+
+
 //*************************************************** Variables ***************************************************
 //Game is not over
 let gameOver = false
@@ -430,7 +435,7 @@ const handleMonsterTurn = () => {
 
                 //Display Monster Power Up in Battle Log
                 battleLogEl.innerHTML += `<p>${monster.getName()} used a Power Up ${monster.getPowerUp()}x next attack ${monster.getPoweredUpAttackDmg()} damage.</p>`
-                
+
                 //Auto scroll to show latest battle log 
                 battleLogMsgScroll()
 
