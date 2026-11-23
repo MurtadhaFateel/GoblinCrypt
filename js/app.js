@@ -385,19 +385,21 @@ const handleMonsterTurn = () => {
             //Display Monster's actions ('attack', 'powerUp' or 'potion') in Monster action display and battle log
             if(monsterActionType === 'attack') {
                 let monsterDmg = monster.getAttackSkill()
-                //Add Comment Here ***********
+                //Check if Monster is Powered Up before calculating damage
                 if(isMonsterPoweredUp === true) {
                     monsterDmg = monster.getPoweredUpAttackDmg()
                     //Display Monster Powered Up Attack
                     monsterActionDisplayEl.textContent = `${monster.getName()} used a powered up attack`
-                    //Add Comment Here ***********
+
+                    //Display Monster Powered Up Attck in battlel logs
                     battleLogEl.innerHTML += `<p>${monster.getName()} used a powered up attack on ${player.getName()} for total damage: ${monsterDmg} against ${player.getName()} HP: ${player.getHP()}.</p>`
                     //Auto scroll to show latest battle log 
                     battleLogMsgScroll()
                 } else {
                     //Display Monster Normal Attack
                     monsterActionDisplayEl.textContent = `${monster.getName()} attacked.`
-                    //Add Comment Here ***********
+
+                    //Display Monster Normal Attack in Battle Log
                     battleLogEl.innerHTML +=`<p>${monster.getName()} attacked ${player.getName()} for total damage: ${monsterDmg} against ${player.getName()} HP: ${player.getHP()}.</p>`
                     //Auto scroll to show latest battle log 
                     battleLogMsgScroll()
@@ -405,7 +407,8 @@ const handleMonsterTurn = () => {
             } else if (monsterActionType === 'powerUp') {
                 //Display Monster Power Up
                 monsterActionDisplayEl.textContent = `${monster.getName()} used a Power Up.`
-                //Add Comment Here ***********
+
+                //Display Monster Power Up in Battle Log
                 battleLogEl.innerHTML += `<p>${monster.getName()} used a Power Up ${monster.getPowerUp()}x next attack ${monster.getPoweredUpAttackDmg()} damage.</p>`
                 //Auto scroll to show latest battle log 
                 battleLogMsgScroll()
@@ -413,7 +416,7 @@ const handleMonsterTurn = () => {
             } else if (monsterActionType === 'potion') {
                 //Display Monster Healing Potion
                 monsterActionDisplayEl.textContent = `${monster.getName()} used a potion.`
-                //Add Comment Here ***********
+                //Display Monster Healing Potion in Battle Log
                 battleLogEl.innerHTML += `<p>${monster.getName()} healed ${monster.getPotion()} HP with potion. Current HP: ${monster.getHP()}.</p>`
                 //Auto scroll to show latest battle log 
                 battleLogMsgScroll()
@@ -472,7 +475,7 @@ const handlePlayerTurn = (actionType) => {
     //Display Player action to battle log based on action
     if(actionType === 'attack') {
         let playerDmg = player.getAttackSkill()
-        //Add Comment Here ***********
+        //Check if Player is Powered Up before calculating damage
         if(isPlayerPoweredUp === true) {
             playerDmg = player.getPoweredUpAttackDmg()
             
