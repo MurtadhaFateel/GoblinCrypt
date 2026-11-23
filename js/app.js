@@ -34,6 +34,7 @@ class GameCharacter {
     constructor(name, hp=100, attackSkillBaseDmg=15, powerUpMultiplier=1.5, healingAmountPotion=25) {
         this.name = name
         this.hp = hp
+        this.maxHP = hp
         this.attackSkillBaseDmg = attackSkillBaseDmg
         this.powerUpMultiplier = powerUpMultiplier
         this.isPoweredUp = false
@@ -164,12 +165,27 @@ class GameCharacter {
 
     //Method: Calculate Healing Potion
     getHealingPotionAmount() {
+        //Charatter's Max HP
+        let maxHP = this.maxHP
         //Character's current HP
         let currentHP = this.getHP()
         //Character's Healing Potion 
         let healingAmountPotion = this.getPotion()
+        
+        //Safeguard: Check if charater already has full HP
+        if(currentHP >= maxHP)
+        {
+            return 0
+        }
+        
         //Replenish Character's HP wtih Potion
         healingAmountPotion = currentHP + healingAmountPotion
+        
+        //Safeguard: HP does not exceed Max HP
+        if(healingAmountPotion > maxHP) {
+            healingAmountPotion = maxHP
+        }
+
         //Set Character's new HP after healing
         this.setHP(healingAmountPotion)
         return healingAmountPotion
@@ -240,13 +256,13 @@ class GameCharacter {
 //Player
 const player = new GameCharacter('Warrior', 120)
 //Monster 1
-const monster1 = new GameCharacter('Goblin 1', 20)
+const monster1 = new GameCharacter('Goblin Grub', 20)
 //Monster 2
-const monster2 = new GameCharacter('Goblin 2', 20)
+const monster2 = new GameCharacter('Goblin Snikk', 20)
 //Monster 3 
-const monster3 = new GameCharacter('Goblin 3', 20)
+const monster3 = new GameCharacter('Goblin Grom', 20)
 //Dungeon Boss 
-const bossMonster1 = new GameCharacter('Dungeon Boss', 20)
+const bossMonster1 = new GameCharacter('Goblin King of Grimgut', 20)
 //Array for Monsters/Boss Objects 
 const monsters = [monster1, monster2, monster3, bossMonster1]
 
@@ -372,7 +388,10 @@ const handleMonsterTurn = () => {
 
         //Check if Monster is Powered Up before turn
         let isMonsterPoweredUp = monster.getIsPoweredUp()
-
+        
+        //Check if Monster already has full HP
+        let isMonsterHPFull = monster.getHP() === monster.maxHP
+        
         //Execute Monster's turn against player and store boolean result
         let monsterActed = monster.monsterTurn(player)
 
@@ -393,17 +412,15 @@ const handleMonsterTurn = () => {
 
                     //Display Monster Powered Up Attck in battlel logs
                     battleLogEl.innerHTML += `<p>${monster.getName()} used a powered up attack on ${player.getName()} for total damage: ${monsterDmg} against ${player.getName()} HP: ${player.getHP()}.</p>`
-                    //Auto scroll to show latest battle log 
-                    battleLogMsgScroll()
                 } else {
                     //Display Monster Normal Attack
                     monsterActionDisplayEl.textContent = `${monster.getName()} attacked.`
 
                     //Display Monster Normal Attack in Battle Log
                     battleLogEl.innerHTML +=`<p>${monster.getName()} attacked ${player.getName()} for total damage: ${monsterDmg} against ${player.getName()} HP: ${player.getHP()}.</p>`
-                    //Auto scroll to show latest battle log 
-                    battleLogMsgScroll()
                 }
+                //Auto scroll to show latest battle log 
+                battleLogMsgScroll()
             } else if (monsterActionType === 'powerUp') {
                 //Display Monster Power Up
                 monsterActionDisplayEl.textContent = `${monster.getName()} used a Power Up.`
@@ -414,10 +431,19 @@ const handleMonsterTurn = () => {
                 battleLogMsgScroll()
 
             } else if (monsterActionType === 'potion') {
-                //Display Monster Healing Potion
-                monsterActionDisplayEl.textContent = `${monster.getName()} used a potion.`
-                //Display Monster Healing Potion in Battle Log
-                battleLogEl.innerHTML += `<p>${monster.getName()} healed ${monster.getPotion()} HP with potion. Current HP: ${monster.getHP()}.</p>`
+                //Check if Monster already has full HP
+                if(isMonsterHPFull === true) {
+                    //Display Monster already has full HP
+                    monsterActionDisplayEl.textContent = `${monster.getName()} already has full HP!`
+
+                    //Display Monster already ahs full HP in battle log 
+                    battleLogEl.innerHTML += `<p>${monster.getName()} already has full HP!</p>`
+                } else {
+                    //Display Monster Healing Potion
+                    monsterActionDisplayEl.textContent = `${monster.getName()} used a potion.`
+                    //Display Monster Healing Potion in Battle Log
+                    battleLogEl.innerHTML += `<p>${monster.getName()} healed ${monster.getPotion()} HP with potion. Current HP: ${monster.getHP()}.</p>`
+                }
                 //Auto scroll to show latest battle log 
                 battleLogMsgScroll()
             }
@@ -460,6 +486,9 @@ const handlePlayerTurn = (actionType) => {
     //Check if Player is Powered Up before turn
     let isPlayerPoweredUp = player.getIsPoweredUp()
 
+    //Check if Player already has full HP
+    let isPlayerHPFull = player.getHP() === player.maxHP
+
     //Execute Player's selected action & store boolean result
     let playerActed = player.playerTurn(actionType, monster)
 
@@ -481,14 +510,12 @@ const handlePlayerTurn = (actionType) => {
             
             //Display battle log Player Powered Up Attack
             battleLogEl.innerHTML += `<p>${player.getName()} used a powered up attack on ${monster.getName()} for total damage: ${playerDmg} against ${monster.getName()} HP: ${monster.getHP()}.</p>`
-            //Auto scroll to show latest battle log 
-            battleLogMsgScroll()
         } else {
             //Display battle log Player Normal Attack 
             battleLogEl.innerHTML += `<p>${player.getName()} attacked ${monster.getName()} for total damage: ${playerDmg} against ${monster.getName()} HP: ${monster.getHP()}.</p>`
-            //Auto scroll to show latest battle log 
-            battleLogMsgScroll()
         }
+        //Auto scroll to show latest battle log 
+        battleLogMsgScroll()
 
     } else if (actionType === 'powerUp') {
         //Display battle log Player used Power Up for next Attack
@@ -496,8 +523,14 @@ const handlePlayerTurn = (actionType) => {
         //Auto scroll to show latest battle log 
         battleLogMsgScroll()
     } else if (actionType === 'potion') {
-        //Display battle log Player used Healing Potion 
-        battleLogEl.innerHTML += `<p>${player.getName()} healed ${player.getPotion()} HP with potion. Current HP: ${player.getHP()}.</p>`
+        //Check if Player already has full HP
+        if(isPlayerHPFull === true) {
+            //Display Player has full HP
+            battleLogEl.innerHTML += `<p>${player.getName()} already has full HP!</p>`
+        } else {
+            //Display battle log Player used Healing Potion 
+            battleLogEl.innerHTML += `<p>${player.getName()} healed ${player.getPotion()} HP with potion. Current HP: ${player.getHP()}.</p>`
+        }
         //Auto scroll to show latest battle log 
         battleLogMsgScroll()
     }

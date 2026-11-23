@@ -78,18 +78,39 @@ button:hover {
     gap: 15px;
     justify-content: center;
     align-items: center;
-    /* min-width: 75vw; */
     min-height: 100vh;
 }
 .display {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     background: var(--bg-section);
     border: 5px solid var(--purple);
     padding: 10px;
-    gap: 10px;
     min-width: 25vw;
     max-width: 25vw;
     min-height: 80vh;
     max-height: 80vh;
+}
+
+.bottomSection {
+    margin-top: auto;
+    margin-bottom: 20px;
+}
+
+.monsterActionBox {
+    background: var(--bg-card);
+    border-left: 4px solid var(--goblin);
+    padding: 18px 20px;
+    margin-bottom: 15px;
+    transition: 0.2s ease;
+}
+
+.monsterActionBox:hover {
+    border-left-color: var(--toxic);
+    background: #342743;
+    transform: translateX(5px);
+    box-shadow: var(--glow-green);
 }
 
 #battleLog {
@@ -101,6 +122,21 @@ button:hover {
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: none;
+}
+
+#battleLogMessages p {
+    background: var(--bg-card);
+    border-left: 4px solid var(--goblin);
+    padding: 18px 20px;
+    margin-bottom: 15px;
+    transition: 0.2s ease;
+}
+
+#battleLogMessages p:hover {
+    border-left-color: var(--toxic);
+    background: #342743;
+    transform: translateX(5px);
+    box-shadow: var(--glow-green);
 }
 
 #battleLogMessages::-webkit-scrollbar {
