@@ -259,13 +259,13 @@ class GameCharacter {
 
 //Characters and Monsters Objects
 //Player
-const player = new GameCharacter('Warrior', 120)
+const player = new GameCharacter('Warrior', 30)
 //Monster 1
-const monster1 = new GameCharacter('Goblin Grub', 20)
+const monster1 = new GameCharacter('Goblin 1 Grub', 20)
 //Monster 2
-const monster2 = new GameCharacter('Goblin Snikk', 20)
+const monster2 = new GameCharacter('Goblin 2 Snikk', 20)
 //Monster 3 
-const monster3 = new GameCharacter('Goblin Grom', 20)
+const monster3 = new GameCharacter('Goblin 3 Grom', 20)
 //Dungeon Boss 
 const bossMonster1 = new GameCharacter('Goblin King of Grimgut', 20)
 //Array for Monsters/Boss Objects 
@@ -319,6 +319,10 @@ const checkBattleEnded = () => {
 
         //Display Player defeat message to battle log 
         battleLogEl.innerHTML += `<p>${player.getName()} has been defeated!</p>`
+
+        //Update Player's Sprite to Death
+        playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-death.png')"
+
         //Auto scroll to show latest battle log 
         battleLogMsgScroll()
         return 
@@ -331,6 +335,10 @@ const checkBattleEnded = () => {
 
         //Display that this monster was defeated in the battle log
         battleLogEl.innerHTML += `<p>${monster.getName()} has been defeated!</p>`
+
+        //Update Goblin Monster Sprite to Death
+        monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-death.png')"
+        
         //Auto scroll to show latest battle log 
         battleLogMsgScroll()
 
@@ -433,7 +441,12 @@ const handleMonsterTurn = () => {
                     //Update Goblin Monster's Sprite to Attck Skill
                     monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-attack.png')"
                 }
-                //Wait for 1.65 seconds before updating Goblin Monster to idle 
+                //Update Player's Sprite to Damage taken
+                playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-damage.png')"
+                //Wait for 1.65 seconds before updating Player's Sprite to idle 
+                setTimeout(()=>{monsterSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-idle.png')"}, 1650)
+
+                //Wait for 1.65 seconds before updating Goblin Monster Sprite to idle 
                 setTimeout(()=>{monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"}, 1650)
 
                 //Auto scroll to show latest battle log 
@@ -447,7 +460,7 @@ const handleMonsterTurn = () => {
 
                 //Update Goblin Monster's Sprite to Power Up
                 monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-powerup.png')"
-                //Wait for 1.65 seconds before updating Goblin Monster to idle 
+                //Wait for 1.65 seconds before updating Goblin Monster Sprite to idle 
                 setTimeout(()=>{monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"}, 1650)
 
                 //Auto scroll to show latest battle log 
@@ -470,12 +483,11 @@ const handleMonsterTurn = () => {
                     //Update Goblin Monster's Sprite to Healing Potion
                     monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-healing.png')"
                 }
-                //Wait for 1.65 seconds before updating Goblin Monster to idle 
+                //Wait for 1.65 seconds before updating Goblin Monster Sprite to idle 
                 setTimeout(()=>{monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"}, 1650)
                 //Auto scroll to show latest battle log 
                 battleLogMsgScroll()
             }
-
         } else {
             //Display when monster did not take an action 
             monsterActionDisplayEl.textContent = `${monster.getName()} did nothing.`
@@ -493,7 +505,7 @@ const handleMonsterTurn = () => {
         //Disable Player's action buttons if game is over
         setPlayerActionBtnDisabled(gameOver === true)
 
-    }, 1000)
+    }, 1650)
 }
 
 //Function: Handle player button click, executes Player's action, update UI/battlelog, check if game is over, and switch to Monster's turn if it is alive
@@ -551,7 +563,12 @@ const handlePlayerTurn = (actionType) => {
             //Update Player's Sprite to Attck Skill
             playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-attack.png')"
         }
-        //Wait for 1.65 seconds before updating Player's to idle 
+        //Update Goblin Monster's Sprite to Damage taken
+        monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-damage.png')"
+        //Wait for 1.65 seconds before updating Goblin Monster Sprite to idle 
+        setTimeout(()=>{monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"}, 1650)
+
+        //Wait for 1.65 seconds before updating Player's Sprite to idle 
         setTimeout(()=>{playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-idle.png')"}, 1650)
         //Auto scroll to show latest battle log 
         battleLogMsgScroll()
@@ -561,7 +578,7 @@ const handlePlayerTurn = (actionType) => {
 
         //Update Player's Sprite to Power Up
         playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-powerup.png')"
-        //Wait for 1.65 seconds before updating Player's to idle 
+        //Wait for 1.65 seconds before updating Player's Sprite to idle 
         setTimeout(()=>{playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-idle.png')"}, 1650)
 
         //Auto scroll to show latest battle log 
@@ -578,7 +595,7 @@ const handlePlayerTurn = (actionType) => {
             //Update Player's Sprite to Healing Potion
             playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-healing.png')"
         }
-        //Wait for 1.65 seconds before updating Player's to idle 
+        //Wait for 1.65 seconds before updating Player's Sprite to idle 
         setTimeout(()=>{playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-idle.png')"}, 1650)
         //Auto scroll to show latest battle log 
         battleLogMsgScroll()
