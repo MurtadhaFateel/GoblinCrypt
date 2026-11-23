@@ -444,7 +444,7 @@ const handleMonsterTurn = () => {
                 //Update Player's Sprite to Damage taken
                 playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-damage.png')"
                 //Wait for 1.65 seconds before updating Player's Sprite to idle 
-                setTimeout(()=>{monsterSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-idle.png')"}, 1650)
+                setTimeout(()=>{playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-idle.png')"}, 1650)
 
                 //Wait for 1.65 seconds before updating Goblin Monster Sprite to idle 
                 setTimeout(()=>{monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"}, 1650)
