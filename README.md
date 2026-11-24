@@ -1,7 +1,4 @@
-## Project Planning
-
-- [Project board](https://github.com/users/MurtadhaFateel/projects/1/views/1)
-- [Wireframe](./wireframe.png)
+# The Goblin's Crypt 
 
 ### Game Logo
 <img width="1254" height="1254" alt="favicon" src="https://github.com/user-attachments/assets/814daef3-a853-4b4c-858c-26a933a9a4b7" />
@@ -12,13 +9,6 @@
 
 #### Game Description 
 A dungeon crawler game called Goblin's Crypt where you are a Warrior. You enter the dungeon and have to slay waves of Goblin Monster you reach final Goblin Boss. The player will win the game upon defeating the final boss. The game ends upon the player is defeated or defeating the final boss.
-
-### Sprint 1
-
-Goal: The player should kill the boss by reaching their health to 0 and win the game. 
-
-Start: 16/Nov/2026
-End: 24/Nov/2026
 
 # **Attributtions**
 ### CSS Credits
@@ -70,3 +60,11 @@ ChatGPT assisted with:
 **Game Development & Implementation:** Goblin's Crypt Project
 
 The artwork was developed through an iterative process, combining the project's original character concepts and creative direction with AI-assisted image generation and sprite adjustments.
+
+# **Technologies Used**
+- HTML
+- CSS 
+- JavaScript 
+
+# Planned Future Enhancements
+- 
