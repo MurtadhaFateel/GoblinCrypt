@@ -1,22 +1,19 @@
-## Project Planning
+# The Goblin's Crypt 
 
-- [Project board](https://github.com/users/MurtadhaFateel/projects/1/views/1)
-- [Wireframe](./wireframe.png)
+### Game Logo
+<img width="1254" height="1254" alt="favicon" src="https://github.com/user-attachments/assets/814daef3-a853-4b4c-858c-26a933a9a4b7" />
 
-<img width="2508" height="1252" alt="Game Battle Scene" src="https://github.com/user-attachments/assets/8b6ceb57-93d0-4aac-9a46-1d74d4d4040b" />
+### Game Battle Screen
+<img width="946" height="406" alt="Game Battle Screen" src="https://github.com/user-attachments/assets/c5a5e103-fc4f-42dc-9e57-4d53ff7d4e22" />
 
 
 #### Game Description 
-A dungeon crawler where you choose one character from warrior, wizard and a rouge. You enter a dungeon and slay waves of monsters in three separate room till they reach the final boss room. The user will win the game upon defeating the final boss. The game ends upon character reach health to 0 or beat the final bosss.
+A dungeon crawler game called Goblin's Crypt where you are a Warrior. You enter the dungeon and have to slay waves of Goblin Monster you reach final Goblin Boss. The player will win the game upon defeating the final boss. The game ends upon the player is defeated or defeating the final boss.
 
-### Sprint 1
+### Getting Started
+Open this game link https://murtadhafateel.github.io/Project/
 
-Goal: The player should kill the boss by reaching their health to 0 and win the game. 
-
-Start: 16/Nov/2026
-End: 24/Nov/2026
-
-### CSS Credits
+# **Credits**
 # 🧌 Goblin's Crypt — Retro RPG CSS Theme
 
 > 🎨 **CSS Styling & Theme Design:** Created with assistance from [ChatGPT](https://chatgpt.com/), including the color palette, typography, button styling, hover effects, transitions, and glow effects.
@@ -28,3 +25,42 @@ A dark, playful, retro RPG-inspired theme featuring dungeon aesthetics, goblin-i
 **Fonts:** Press Start 2P · VT323 · Silkscreen
 
 ---
+
+## 🎨 Character Sprites & Animations
+
+> 🎨 **Character Sprite Artwork & Animation Assets:** Created with assistance from [ChatGPT](https://chatgpt.com/), including retro pixel-art character designs, two-frame sprite sheets, battle animation artwork, magical aura effects, sprite alignment, and frame adjustments.
+
+The game features three pixel-art characters:
+
+- ⚔️ **Warrior (Player)** — Silver armor, purple cape, sword, and blue magical effects.
+- 🧌 **Regular Goblin (Enemy)** — Green skin, brown hood, dagger, and toxic-green magical effects.
+- 👑 **Goblin Boss (The Goblin King of Grimgut)** — Heavy armor, golden crown, purple cape, and red magical effects.
+
+### ⚔️ Sprite Animation States
+
+Each character has seven animation states:
+
+1. Idle
+2. Attack
+3. Power Up
+4. Healing Potion
+5. Taking Damage
+6. Powered-Up Attack
+7. Death
+
+### 🖼️ Sprite Sheet Specifications
+
+Every animation uses **two 64 × 64 pixel frames**, combined horizontally into a **128 × 64 pixel PNG sprite sheet**.
+
+Each character has seven sprite sheets, resulting in **21 sprite sheets and
+
+# **Technologies Used**
+- HTML
+- CSS 
+- JavaScript 
+
+# Future Enhancements
+- More playable character's.
+- More dungeons level with different Bosses/Monsters.
+- More character's stats, such defense, ultimate skill.
+- Game audio for monster encounter level and Boss encounter level.
