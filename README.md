@@ -3,10 +3,10 @@
 - [Project board](https://github.com/users/MurtadhaFateel/projects/1/views/1)
 - [Wireframe](./wireframe.png)
 
-Game Logo
+### Game Logo
 <img width="1254" height="1254" alt="favicon" src="https://github.com/user-attachments/assets/814daef3-a853-4b4c-858c-26a933a9a4b7" />
 
-Game Battle Screen
+### Game Battle Screen
 <img width="946" height="406" alt="Game Battle Screen" src="https://github.com/user-attachments/assets/c5a5e103-fc4f-42dc-9e57-4d53ff7d4e22" />
 
 
