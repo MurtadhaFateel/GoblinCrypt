@@ -3,11 +3,11 @@
 - [Project board](https://github.com/users/MurtadhaFateel/projects/1/views/1)
 - [Wireframe](./wireframe.png)
 
-<img width="2508" height="1252" alt="Game Battle Scene" src="https://github.com/user-attachments/assets/8b6ceb57-93d0-4aac-9a46-1d74d4d4040b" />
+<img width="946" height="406" alt="Game Battle Screen" src="https://github.com/user-attachments/assets/c5a5e103-fc4f-42dc-9e57-4d53ff7d4e22" />
 
 
 #### Game Description 
-A dungeon crawler where you choose one character from warrior, wizard and a rouge. You enter a dungeon and slay waves of monsters in three separate room till they reach the final boss room. The user will win the game upon defeating the final boss. The game ends upon character reach health to 0 or beat the final bosss.
+A dungeon crawler game called Goblin's Crypt where you are a Warrior. You enter the dungeon and have to slay waves of Goblin Monster you reach final Goblin Boss. The player will win the game upon defeating the final boss. The game ends upon the player is defeated or defeating the final boss.
 
 ### Sprint 1
 
