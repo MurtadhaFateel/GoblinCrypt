@@ -11,7 +11,7 @@
 A dungeon crawler game called Goblin's Crypt where you are a Warrior. You enter the dungeon and have to slay waves of Goblin Monster you reach final Goblin Boss. The player will win the game upon defeating the final boss. The game ends upon the player is defeated or defeating the final boss.
 
 ### Getting Started
-Open this game link https://murtadhafateel.github.io/GoblinCrypt/
+Open this link to play the game https://murtadhafateel.github.io/GoblinCrypt/
 
 # **Credits**
 # 🧌 Goblin's Crypt — Retro RPG CSS Theme
