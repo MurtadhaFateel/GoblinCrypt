@@ -54,6 +54,14 @@ Every animation uses **two 64 × 64 pixel frames**, combined horizontally into a
 
 Each character has seven sprite sheets, resulting in **21 sprite sheets and
 
+### External Resources
+- [Scroll Top](https://www.w3schools.com/jsref/prop_element_scrolltop.asp?utm_source=chatgpt.com)
+- [Scroll Top](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollTop)
+- [Scroll Height](https://www.w3schools.com/jsref/prop_element_scrollheight.asp?utm_source=chatgpt.com)
+- [Scroll Height](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight)
+- [Get](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get)
+- [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set)
+
 # **Technologies Used**
 - HTML
 - CSS 
