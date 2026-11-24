@@ -27,7 +27,6 @@ A dark, playful, retro RPG-inspired theme featuring dungeon aesthetics, goblin-i
 **Colors:** Purple · Black · Toxic Green  
 **Fonts:** Press Start 2P · VT323 · Silkscreen
 
----
 ## 🎨 Character Sprites & Animations
 
 The character sprites for **Goblin's Crypt** were designed and generated with assistance from **OpenAI's ChatGPT**.
