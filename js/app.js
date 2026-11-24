@@ -32,6 +32,8 @@ let gameOver = false
 let isMonsterTurnActive = false 
 //Monster's chosen action
 let monsterActionType = null 
+//Track whether a transation to the next Monster is active
+let isTransitionToNextMonster = false
 
 //*************************************************** Classes ***************************************************
 //Game Character (Player or Monster or Boss Monster) class with stats: Name, HP, Attack Skill, Power Up Skill, Power Up Skill Active/Inactive, Healing Potion 
@@ -259,7 +261,7 @@ class GameCharacter {
 
 //Characters and Monsters Objects
 //Player
-const player = new GameCharacter('Warrior', 30)
+const player = new GameCharacter('Warrior', 100)
 //Monster 1
 const monster1 = new GameCharacter('Goblin 1 Grub', 20)
 //Monster 2
@@ -305,6 +307,12 @@ renderMonsterStats()
 
 //Function: Check if Player or Monster HP is 0, set game is over and disable action buttons if Player defeated or all Monsters are defeated, or spawn the next Monster and update UI & battle log
 const checkBattleEnded = () => {
+
+    //Safeguard: Stop this function if a Monster is already defeated and waiting for the next Monster to Spawn, to prevent duplicate transitions
+    if(isTransitionToNextMonster === true) {
+        return 
+    }
+
     //Get the monster active in battle 
     let monster = getCurrentMonster()
 
@@ -335,39 +343,73 @@ const checkBattleEnded = () => {
 
         //Display that this monster was defeated in the battle log
         battleLogEl.innerHTML += `<p>${monster.getName()} has been defeated!</p>`
-
-        //Update Goblin Monster Sprite to Death
-        monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-death.png')"
         
+        //Set Death Sprite based on whether the defeated Monster is the Goblin Boss or a regular Goblin
+        if(currentMonsterIndex === 3) {
+            //Set Goblin Boss Sprite to Death
+            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-death.png')"
+        } else {
+            //Set Goblin Monster Sprite to Death
+            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-death.png')"
+        }
+
         //Auto scroll to show latest battle log 
         battleLogMsgScroll()
 
-        //Check if there are remaining Monsters in the Monsters Array
-        if(currentMonsterIndex < monsters.length - 1) {
-            //Move to the next monster
-            currentMonsterIndex++
-            //Update Monster's Name & HP on UI
-            renderMonsterStats()
-            //Display new monster is ready in Monster's action display
-            monsterActionDisplayEl.textContent = `${getCurrentMonster().getName()} is waiting for your move.`
-            //Display the next Monster in the battle log
-            battleLogEl.innerHTML += `<p>${getCurrentMonster().getName()} has spawned!</p>`
-            //Auto scroll to show latest battle log 
-            battleLogMsgScroll()
-        } else {
-            //No remaining Monsters are available and Player has won - Game Over - battle has ended
-            gameOver = true 
-            //Disable Player's action buttons
-            setPlayerActionBtnDisabled(true)
-            //Victory message to battle log
-            battleLogEl.innerHTML += `<p>You have defeated every monster, Victory!</p>`
-            //Auto scroll to show latest battle log 
-            battleLogMsgScroll()
-        }
+        //Monster Defeated: Activate transition to prevent Player's actions untill the next Monster spawns
+        isTransitionToNextMonster = true
+        //Disable Player's action buttons during Monster death animation and transition  
+        setPlayerActionBtnDisabled(true)
+
+        //Wait for 1.65 second for Monster death animation before spawning the next Monster
+        setTimeout(() => {
+            //Check if there are remaining Monsters in the Monsters Array
+            if(currentMonsterIndex < monsters.length - 1) {
+                //Move to the next monster
+                currentMonsterIndex++
+                //Update Monster's Name & HP on UI
+                renderMonsterStats()
+                
+                //Set Idle Sprite for the next Monster based on whetehr it is the Goblin Boss or regular Goblin
+                if(currentMonsterIndex === 3) {
+                    //Set Goblin Boss Sprite to idle
+                    monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-idle.png')"
+                } else {
+                    //Set Goblin Monster Sprite to idle
+                    monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"
+                }
+                
+                //Display new monster is ready in Monster's action display
+                monsterActionDisplayEl.textContent = `${getCurrentMonster().getName()} is waiting for your move.`
+                
+                //Display the next Monster in the battle log
+                battleLogEl.innerHTML += `<p>${getCurrentMonster().getName()} has spawned!</p>`
+                
+                //Auto scroll to show latest battle log 
+                battleLogMsgScroll()
+                
+                //Monster Monster Spawned: End transition and enable Player's action buttons
+                isTransitionToNextMonster = false 
+                setPlayerActionBtnDisabled(false)
+            } else {
+                //All Monsters defeated: End game with Victory! 
+                gameOver = true 
+                //Reset Monster transition afteting the final boss
+                isTransitionToNextMonster = false 
+                //Disable Player's action buttons because game is over
+                setPlayerActionBtnDisabled(true)
+                
+                //Victory message to battle log
+                battleLogEl.innerHTML += `<p>You have defeated every monster, Victory!</p>`
+                
+                //Auto scroll to show latest battle log 
+                battleLogMsgScroll()
+            }
+        },1650)
     }
 }
 
-//Function: Monster's takes its turn after a 1 second delay, locks Player's buttons, executes Monster action, checks if game is over, update UI/battle log and unlock Player's buttons
+//Function: Monster's takes its turn after a 1.65 second delay, executes its action, update UI/battle log and manage Player's action buttons
 const handleMonsterTurn = () => {
     //Get the monster active in battle 
     let monster = getCurrentMonster()
@@ -376,8 +418,8 @@ const handleMonsterTurn = () => {
     if(gameOver === true || monster.checkCharacterHealth() === false || player.checkCharacterHealth() === false) {
         //Unlock Player's turn
         isMonsterTurnActive = false
-        //Disable Player's action buttons if game is over
-        setPlayerActionBtnDisabled(gameOver === true)
+        //Disable Player's action buttons if game is over or monster transition is active
+        setPlayerActionBtnDisabled(gameOver === true || isTransitionToNextMonster === true)
         return
     }
 
@@ -388,14 +430,14 @@ const handleMonsterTurn = () => {
     //Display monster turn status in Monster action display
     monsterActionDisplayEl.textContent = `${monster.getName()} is choosing a move...`
 
-    //Wait for 1 second before taking monster's turn 
+    //Wait for 1.65 second before Monster takes its turn
     setTimeout(() => {
-        //Safeguard: stop if game is over or either Player or Monster HP is 0 after 1 second delay
+        //Safeguard: Stop if Player or Monster is defeated or game is over after the delay
         if(gameOver === true || monster.checkCharacterHealth() === false || player.checkCharacterHealth() === false) {
             //Unlock Player's turn after Monster finishes its turn
             isMonsterTurnActive = false 
-            //Disable Player's action buttons if game is over
-            setPlayerActionBtnDisabled(gameOver === true)
+            //Disable Player's action buttons if game is over or monster transition active
+            setPlayerActionBtnDisabled(gameOver === true || isTransitionToNextMonster === true)
             return 
         }
 
@@ -429,8 +471,14 @@ const handleMonsterTurn = () => {
                     //Display Monster Powered Up Attck in battlel logs
                     battleLogEl.innerHTML += `<p>${monster.getName()} used a powered up attack on ${player.getName()} for total damage: ${monsterDmg} against ${player.getName()} HP: ${player.getHP()}.</p>`
 
-                    //Update Goblin Monster's Sprite to Powered Up Attck Skill
-                    monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-powered-attack.png')"
+                    //Set Powered Up Attack Sprite based on whether the active Monster is the Goblin Boss or regular Goblin
+                    if(currentMonsterIndex === 3) {
+                        //Boss Goblin Powered Up Attack Skill
+                        monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-powered-attack.png')"
+                    } else {
+                        //Update Goblin Monster's Sprite to Powered Up Attck Skill
+                        monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-powered-attack.png')"
+                    }
                 } else {
                     //Display Monster Normal Attack
                     monsterActionDisplayEl.textContent = `${monster.getName()} attacked.`
@@ -438,16 +486,37 @@ const handleMonsterTurn = () => {
                     //Display Monster Normal Attack in Battle Log
                     battleLogEl.innerHTML +=`<p>${monster.getName()} attacked ${player.getName()} for total damage: ${monsterDmg} against ${player.getName()} HP: ${player.getHP()}.</p>`
 
-                    //Update Goblin Monster's Sprite to Attck Skill
-                    monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-attack.png')"
+                    //Set Normal Attack Skill Sprite based on whether the active Monster is the Goblin Bpss or a regular Goblin
+                    if(currentMonsterIndex === 3) {
+                        //Boss Goblin Normal Attack
+                        monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-attack.png')"
+                    } else {
+                        //Regular Goblin Normal Attack
+                        monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-attack.png')"
+                    }
                 }
                 //Update Player's Sprite to Damage taken
                 playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-damage.png')"
-                //Wait for 1.65 seconds before updating Player's Sprite to idle 
-                setTimeout(()=>{playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-idle.png')"}, 1650)
 
-                //Wait for 1.65 seconds before updating Goblin Monster Sprite to idle 
-                setTimeout(()=>{monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"}, 1650)
+                //Wait for 1.65 seconds before updating Player's Sprite to idle if still alive
+                setTimeout(()=>{
+                    if(player.checkCharacterHealth() === true) {
+                        playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-idle.png')" 
+                    }
+                }, 1650)
+
+                //Reuturn Monster's Sprite to idle after 1.65 seconds only if its alive and no transition is active
+                setTimeout(()=>{
+                    if(getCurrentMonster().checkCharacterHealth() === true && isTransitionToNextMonster === false) {
+                        if(currentMonsterIndex === 3) {
+                            //Set Goblin Boss Sprite to idle
+                            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-idle.png')"
+                        } else {
+                            //Set Goblin Monster Sprite to idle
+                            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"
+                        }
+                    }
+                }, 1650)
 
                 //Auto scroll to show latest battle log 
                 battleLogMsgScroll()
@@ -458,10 +527,28 @@ const handleMonsterTurn = () => {
                 //Display Monster Power Up in Battle Log
                 battleLogEl.innerHTML += `<p>${monster.getName()} used a Power Up ${monster.getPowerUp()}x next attack ${monster.getPoweredUpAttackDmg()} damage.</p>`
 
-                //Update Goblin Monster's Sprite to Power Up
-                monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-powerup.png')"
-                //Wait for 1.65 seconds before updating Goblin Monster Sprite to idle 
-                setTimeout(()=>{monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"}, 1650)
+                //Set Power Up Sprite based on whether the active Monster is the Goblin Boss or regular Goblin
+                if(currentMonsterIndex === 3) {
+                    //Set Goblin Boss Sprite to Power Up
+                    monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-powerup.png')"
+                }
+                else {
+                    //Set Goblin Monster's Sprite to Power Up
+                    monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-powerup.png')"
+                }
+
+                //Reuturn Monster's Sprite to idle after 1.65 seconds only if its alive and no transition is active
+                setTimeout(()=>{
+                    if(getCurrentMonster().checkCharacterHealth() === true && isTransitionToNextMonster === false) {
+                        if(currentMonsterIndex === 3) {
+                            //Set Goblin Boss Sprite to idle
+                            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-idle.png')"
+                        } else {
+                            //Set Goblin Monster Sprite to idle
+                            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"
+                        }
+                    }
+                }, 1650)
 
                 //Auto scroll to show latest battle log 
                 battleLogMsgScroll()
@@ -480,11 +567,31 @@ const handleMonsterTurn = () => {
                     //Display Monster Healing Potion in Battle Log
                     battleLogEl.innerHTML += `<p>${monster.getName()} healed ${monster.getHP() - monsterHPBeforeHealingAction} HP with potion. Current HP: ${monster.getHP()}.</p>`
 
-                    //Update Goblin Monster's Sprite to Healing Potion
-                    monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-healing.png')"
+                    //Set Healing Sprite based on whether the active Monster is the Goblin Boss or a regular Goblin
+                    if(currentMonsterIndex === 3) {
+                        //Set Goblin Boss Sprite to Healing Potion
+                        monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-healing.png')"
+                    }
+                    else {
+                        //Set Goblin Monster's Sprite to Healing
+                        monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-healing.png')"
+                    }
+
                 }
-                //Wait for 1.65 seconds before updating Goblin Monster Sprite to idle 
-                setTimeout(()=>{monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"}, 1650)
+
+                //Reuturn Monster's Sprite to idle after 1.65 seconds only if its alive and no transition is active
+                setTimeout(()=>{
+                    if(getCurrentMonster().checkCharacterHealth() === true && isTransitionToNextMonster === false) {
+                        if(currentMonsterIndex === 3) {
+                            //Set Goblin Boss Sprite to idle
+                            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-idle.png')"
+                        } else {
+                            //Set Goblin Monster Sprite to idle
+                            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"
+                        }
+                    }
+                }, 1650)
+
                 //Auto scroll to show latest battle log 
                 battleLogMsgScroll()
             }
@@ -502,8 +609,8 @@ const handleMonsterTurn = () => {
         checkBattleEnded()
         //Unlock Player's turn after Monster finishes its turn
         isMonsterTurnActive = false 
-        //Disable Player's action buttons if game is over
-        setPlayerActionBtnDisabled(gameOver === true)
+        //Disable Player's action buttons if game is over or next monster transition animation true 
+        setPlayerActionBtnDisabled(gameOver === true || isTransitionToNextMonster === true)
 
     }, 1650)
 }
@@ -513,8 +620,8 @@ const handlePlayerTurn = (actionType) => {
     //Get the Monster active in battle 
     let monster = getCurrentMonster()
 
-    //Safeguard: Stop if game is over or monster turn is active 
-    if(gameOver === true || isMonsterTurnActive === true) {
+    //Safeguard: Prevent Player actions if game is over, Monster turn is active or next Monster transition is active
+    if(gameOver === true || isMonsterTurnActive === true || isTransitionToNextMonster === true) {
         return 
     }
 
@@ -563,10 +670,28 @@ const handlePlayerTurn = (actionType) => {
             //Update Player's Sprite to Attck Skill
             playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-attack.png')"
         }
-        //Update Goblin Monster's Sprite to Damage taken
-        monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-damage.png')"
-        //Wait for 1.65 seconds before updating Goblin Monster Sprite to idle 
-        setTimeout(()=>{monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"}, 1650)
+
+        //Set Damage Sprite based on whether the attacked Monster is the Goblin Boss or regular Goblin
+        if(currentMonsterIndex === 3) {
+            //Set Goblin Boss Sprite to Taking Damage
+            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-damage.png')"
+            } else {
+            //Set Goblin Monster's Sprite to Taking Damage
+            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-damage.png')"
+            }
+
+            //Wait for 1.65 seconds before updating Boss Goblin or Goblin Monster Sprite to idle 
+            setTimeout(()=>{
+            if(monster.checkCharacterHealth() === true && isTransitionToNextMonster === false) {
+                if(currentMonsterIndex === 3) {
+                    //Set Goblin Boss Sprite to idle
+                    monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-idle.png')"
+                } else {
+                    //Set Goblin Monster Sprite to idle
+                    monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"
+                }
+            }
+        }, 1650)
 
         //Wait for 1.65 seconds before updating Player's Sprite to idle 
         setTimeout(()=>{playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-idle.png')"}, 1650)
