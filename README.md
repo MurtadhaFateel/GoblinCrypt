@@ -14,7 +14,6 @@ A dungeon crawler game called Goblin's Crypt where you are a Warrior. You enter 
 Open this game link https://murtadhafateel.github.io/Project/
 
 # **Credits**
-### CSS Credits
 # 🧌 Goblin's Crypt — Retro RPG CSS Theme
 
 > 🎨 **CSS Styling & Theme Design:** Created with assistance from [ChatGPT](https://chatgpt.com/), including the color palette, typography, button styling, hover effects, transitions, and glow effects.
@@ -25,15 +24,19 @@ A dark, playful, retro RPG-inspired theme featuring dungeon aesthetics, goblin-i
 **Colors:** Purple · Black · Toxic Green  
 **Fonts:** Press Start 2P · VT323 · Silkscreen
 
+---
+
 ## 🎨 Character Sprites & Animations
 
-The character sprites for **Goblin's Crypt** were designed and generated with assistance from **OpenAI's ChatGPT**.
+> 🎨 **Character Sprite Artwork & Animation Assets:** Created with assistance from [ChatGPT](https://chatgpt.com/), including retro pixel-art character designs, two-frame sprite sheets, battle animation artwork, magical aura effects, sprite alignment, and frame adjustments.
 
 The game features three pixel-art characters:
 
 - ⚔️ **Warrior (Player)** — Silver armor, purple cape, sword, and blue magical effects.
 - 🧌 **Regular Goblin (Enemy)** — Green skin, brown hood, dagger, and toxic-green magical effects.
 - 👑 **Goblin Boss (The Goblin King of Grimgut)** — Heavy armor, golden crown, purple cape, and red magical effects.
+
+### ⚔️ Sprite Animation States
 
 Each character has seven animation states:
 
@@ -45,24 +48,11 @@ Each character has seven animation states:
 6. Powered-Up Attack
 7. Death
 
+### 🖼️ Sprite Sheet Specifications
+
 Every animation uses **two 64 × 64 pixel frames**, combined horizontally into a **128 × 64 pixel PNG sprite sheet**.
 
-The sprite sheets are animated using CSS `@keyframes`, `background-position`, and `steps(2)`, while JavaScript controls the animation states during gameplay.
-
-### 🤖 AI Assistance & Credits
-
-**Character Sprite Artwork & Animation Assets:** Created with assistance from OpenAI's ChatGPT.
-
-ChatGPT assisted with:
-- Generating retro pixel-art character designs.
-- Creating sprite artwork for different battle actions.
-- Designing blue, green, and red magical effects.
-- Preparing two-frame sprite sheets for CSS animations.
-- Adjusting sprite dimensions, alignment, and character directions.
-
-**Game Development & Implementation:** Goblin's Crypt Project
-
-The artwork was developed through an iterative process, combining the project's original character concepts and creative direction with AI-assisted image generation and sprite adjustments.
+Each character has seven sprite sheets, resulting in **21 sprite sheets and
 
 # **Technologies Used**
 - HTML
