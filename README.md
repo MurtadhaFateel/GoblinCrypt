@@ -20,7 +20,7 @@ Goal: The player should kill the boss by reaching their health to 0 and win the 
 Start: 16/Nov/2026
 End: 24/Nov/2026
 
-**Attributtions**
+# **Attributtions**
 ### CSS Credits
 # 🧌 Goblin's Crypt — Retro RPG CSS Theme
 
