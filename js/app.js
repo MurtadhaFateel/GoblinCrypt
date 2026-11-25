@@ -131,7 +131,7 @@ class GameCharacter {
         return baseAttackDmg
     }
 
-    //Method: Check Character Health (Character Health Point is greater than 0 or alive)
+    //Method: Check if Character is alive (HP is greater than 0)
     checkCharacterHealth()
     {
         let characterHealth = this.getHP()
@@ -185,7 +185,7 @@ class GameCharacter {
             return 0
         }
         
-        //Replenish Character's HP wtih Potion
+        //Calculate Character's HP after using Healing Potion
         healingAmountPotion = currentHP + healingAmountPotion
         
         //Safeguard: HP does not exceed Max HP
@@ -316,7 +316,7 @@ const checkBattleEnded = () => {
     //Get the monster active in battle 
     let monster = getCurrentMonster()
 
-    //Check if player's health is 0 (false = 0)
+    //Check if Player has been defeated (HP is 0)
     if(player.checkCharacterHealth() === false) {
         //Game Over - battle has ended
         gameOver = true 
@@ -691,7 +691,7 @@ const handlePlayerTurn = (actionType) => {
             monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Sprite/goblin-damage.png')"
             }
 
-            //Wait for 1.65 seconds before updating Boss Goblin or Goblin Monster Sprite to idle 
+            //Return Monster's Sprite to idle after 1.65 seconds if still alive and no transition is active
             setTimeout(()=>{
             if(monster.checkCharacterHealth() === true && isTransitionToNextMonster === false) {
                 if(currentMonsterIndex === 3) {
