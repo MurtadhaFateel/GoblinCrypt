@@ -155,13 +155,6 @@ a:hover {
     color: var(--purple-light);
 }
 
-/* Character's Sprite */
-/* .characterSprite {
-    display: flex; 
-    justify-content: center;
-    align-items: center;
-} */
-
 /* Player Character Div */
 #playerCharacter {
     width: 100%;
@@ -179,12 +172,12 @@ a:hover {
     background-image: url('../assets/Warrior-Sprite/warrior-idle.png');
     background-repeat: no-repeat;
     background-size: 32rem auto;
+    background-size: cover;
     background-position: -16rem 0;
     animation-name: idle;
     animation-duration: 0.6s;
     animation-timing-function: steps(2);
     animation-iteration-count: infinite;
-    background-size: cover;
 }
 
 @keyframes idle {
@@ -214,13 +207,12 @@ a:hover {
     background-image: url('../assets/Goblin-Sprite/goblin-idle.png');
     background-repeat: no-repeat;
     background-size: 32rem auto;
-    /* background-position: -16px 0; */
+    background-size: cover;
     background-position: -16rem 0;
     animation-name: idle;
     animation-duration: 0.6s;
     animation-timing-function: steps(2);
     animation-iteration-count: infinite;
-    background-size: cover;
 }
 
 @media (max-width: 768px) {

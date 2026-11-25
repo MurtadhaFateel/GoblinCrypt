@@ -32,7 +32,7 @@ let gameOver = false
 let isMonsterTurnActive = false 
 //Monster's chosen action
 let monsterActionType = null 
-//Track whether a transation to the next Monster is active
+//Track whether a transition to the next Monster is active
 let isTransitionToNextMonster = false
 
 //*************************************************** Classes ***************************************************
@@ -261,15 +261,15 @@ class GameCharacter {
 
 //Characters and Monsters Objects
 //Player
-const player = new GameCharacter('Warrior', 60)
+const player = new GameCharacter('Warrior', 200)
 //Monster 1
-const monster1 = new GameCharacter('Goblin 1 Grub', 15)
+const monster1 = new GameCharacter('Goblin 1 Grub', 30)
 //Monster 2
-const monster2 = new GameCharacter('Goblin 2 Snikk', 15)
+const monster2 = new GameCharacter('Goblin 2 Snikk', 30)
 //Monster 3 
-const monster3 = new GameCharacter('Goblin 3 Grom', 15)
+const monster3 = new GameCharacter('Goblin 3 Grom', 30)
 //Dungeon Boss 
-const bossMonster1 = new GameCharacter('Goblin King of Grimgut', 30)
+const bossMonster1 = new GameCharacter('Goblin King of Grimgut', 60)
 //Array for Monsters/Boss Objects 
 const monsters = [monster1, monster2, monster3, bossMonster1]
 
@@ -331,7 +331,7 @@ const checkBattleEnded = () => {
         //Set Player's Sprite to Death
         playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-death.png')"
 
-        //Set Vicotry Sprite based on whether the Monster is the Goblin Boss or a regular Goblin
+        //Set Victory Sprite based on whether the Monster is the Goblin Boss or a regular Goblin
         if(currentMonsterIndex === 3) {
             //Set Goblin Boss Sprite to Victory
             monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-victory.png')"
@@ -397,7 +397,7 @@ const checkBattleEnded = () => {
                 //Auto scroll to show latest battle log 
                 battleLogMsgScroll()
                 
-                //Monster Monster Spawned: End transition and enable Player's action buttons
+                //Monster Spawned: End transition and enable Player's action buttons
                 isTransitionToNextMonster = false 
                 setPlayerActionBtnDisabled(false)
             } else {
@@ -480,7 +480,7 @@ const handleMonsterTurn = () => {
                     //Display Monster Powered Up Attack
                     monsterActionDisplayEl.textContent = `${monster.getName()} used a powered up attack`
 
-                    //Display Monster Powered Up Attck in battlel logs
+                    //Display Monster Powered Up Attack in battle logs
                     battleLogEl.innerHTML += `<p>${monster.getName()} used a powered up attack on ${player.getName()} for total damage: ${monsterDmg} against ${player.getName()} HP: ${player.getHP()}.</p>`
 
                     //Set Powered Up Attack Sprite based on whether the active Monster is the Goblin Boss or regular Goblin
@@ -517,7 +517,7 @@ const handleMonsterTurn = () => {
                     }
                 }, 1650)
 
-                //Reuturn Monster's Sprite to idle after 1.65 seconds only if its alive and no transition is active
+                //Return Monster's Sprite to idle after 1.65 seconds only if its alive and no transition is active
                 setTimeout(()=>{
                     if(getCurrentMonster().checkCharacterHealth() === true && isTransitionToNextMonster === false) {
                         if(currentMonsterIndex === 3) {
