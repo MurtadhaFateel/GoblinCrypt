@@ -329,15 +329,15 @@ const checkBattleEnded = () => {
         battleLogEl.innerHTML += `<p>${player.getName()} has been defeated!</p>`
 
         //Set Player's Sprite to Death
-        playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-death.png')"
+        playerSpriteEl.style.backgroundImage = "url('./assets/Warrior-Sprite/warrior-death.png')"
 
         //Set Victory Sprite based on whether the Monster is the Goblin Boss or a regular Goblin
         if(currentMonsterIndex === 3) {
             //Set Goblin Boss Sprite to Victory
-            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-victory.png')"
+            monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Boss-Sprite/boss-victory.png')"
         } else {
             //Set Goblin Monster Sprite to Victory
-            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-victory.png')"
+            monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Sprite/goblin-victory.png')"
         }
 
         //Auto scroll to show latest battle log 
@@ -356,10 +356,10 @@ const checkBattleEnded = () => {
         //Set Death Sprite based on whether the defeated Monster is the Goblin Boss or a regular Goblin
         if(currentMonsterIndex === 3) {
             //Set Goblin Boss Sprite to Death
-            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-death.png')"
+            monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Boss-Sprite/boss-death.png')"
         } else {
             //Set Goblin Monster Sprite to Death
-            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-death.png')"
+            monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Sprite/goblin-death.png')"
         }
 
         //Auto scroll to show latest battle log 
@@ -382,10 +382,10 @@ const checkBattleEnded = () => {
                 //Set Idle Sprite for the next Monster based on whether it is the Goblin Boss or regular Goblin
                 if(currentMonsterIndex === 3) {
                     //Set Goblin Boss Sprite to idle
-                    monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-idle.png')"
+                    monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Boss-Sprite/boss-idle.png')"
                 } else {
                     //Set Goblin Monster Sprite to idle
-                    monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"
+                    monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Sprite/goblin-idle.png')"
                 }
                 
                 //Display new monster is ready in Monster's action display
@@ -412,7 +412,7 @@ const checkBattleEnded = () => {
                 battleLogEl.innerHTML += `<p>You have defeated every monster, Victory!</p>`
 
                 //Set Player's Sprite to victory 
-                playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-victory.png')"
+                playerSpriteEl.style.backgroundImage = "url('./assets/Warrior-Sprite/warrior-victory.png')"
 
                 //Auto scroll to show latest battle log 
                 battleLogMsgScroll()
@@ -486,10 +486,10 @@ const handleMonsterTurn = () => {
                     //Set Powered Up Attack Sprite based on whether the active Monster is the Goblin Boss or regular Goblin
                     if(currentMonsterIndex === 3) {
                         //Boss Goblin Powered Up Attack Skill
-                        monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-powered-attack.png')"
+                        monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Boss-Sprite/boss-powered-attack.png')"
                     } else {
                         //Update Goblin Monster's Sprite to Powered Up Attck Skill
-                        monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-powered-attack.png')"
+                        monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Sprite/goblin-powered-attack.png')"
                     }
                 } else {
                     //Display Monster Normal Attack
@@ -501,19 +501,19 @@ const handleMonsterTurn = () => {
                     //Set Normal Attack Skill Sprite based on whether the active Monster is the Goblin Bpss or a regular Goblin
                     if(currentMonsterIndex === 3) {
                         //Boss Goblin Normal Attack
-                        monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-attack.png')"
+                        monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Boss-Sprite/boss-attack.png')"
                     } else {
                         //Regular Goblin Normal Attack
-                        monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-attack.png')"
+                        monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Sprite/goblin-attack.png')"
                     }
                 }
                 //Set Player's Sprite to Damage taken
-                playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-damage.png')"
+                playerSpriteEl.style.backgroundImage = "url('./assets/Warrior-Sprite/warrior-damage.png')"
 
                 //Wait for 1.65 seconds before updating Player's Sprite to idle if still alive - Prevent setting Player's to idle if not alive
                 setTimeout(()=>{
                     if(player.checkCharacterHealth() === true) {
-                        playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-idle.png')" 
+                        playerSpriteEl.style.backgroundImage = "url('./assets/Warrior-Sprite/warrior-idle.png')" 
                     }
                 }, 1650)
 
@@ -522,10 +522,10 @@ const handleMonsterTurn = () => {
                     if(getCurrentMonster().checkCharacterHealth() === true && isTransitionToNextMonster === false) {
                         if(currentMonsterIndex === 3) {
                             //Set Goblin Boss Sprite to idle
-                            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-idle.png')"
+                            monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Boss-Sprite/boss-idle.png')"
                         } else {
                             //Set Goblin Monster Sprite to idle
-                            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"
+                            monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Sprite/goblin-idle.png')"
                         }
                     }
                 }, 1650)
@@ -542,11 +542,11 @@ const handleMonsterTurn = () => {
                 //Set Power Up Sprite based on whether the active Monster is the Goblin Boss or regular Goblin
                 if(currentMonsterIndex === 3) {
                     //Set Goblin Boss Sprite to Power Up
-                    monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-powerup.png')"
+                    monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Boss-Sprite/boss-powerup.png')"
                 }
                 else {
                     //Set Goblin Monster's Sprite to Power Up
-                    monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-powerup.png')"
+                    monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Sprite/goblin-powerup.png')"
                 }
 
                 //Reuturn Monster's Sprite to idle after 1.65 seconds only if its alive and no transition is active
@@ -554,10 +554,10 @@ const handleMonsterTurn = () => {
                     if(getCurrentMonster().checkCharacterHealth() === true && isTransitionToNextMonster === false) {
                         if(currentMonsterIndex === 3) {
                             //Set Goblin Boss Sprite to idle
-                            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-idle.png')"
+                            monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Boss-Sprite/boss-idle.png')"
                         } else {
                             //Set Goblin Monster Sprite to idle
-                            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"
+                            monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Sprite/goblin-idle.png')"
                         }
                     }
                 }, 1650)
@@ -582,11 +582,11 @@ const handleMonsterTurn = () => {
                     //Set Healing Sprite based on whether the active Monster is the Goblin Boss or a regular Goblin
                     if(currentMonsterIndex === 3) {
                         //Set Goblin Boss Sprite to Healing Potion
-                        monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-healing.png')"
+                        monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Boss-Sprite/boss-healing.png')"
                     }
                     else {
                         //Set Goblin Monster's Sprite to Healing
-                        monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-healing.png')"
+                        monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Sprite/goblin-healing.png')"
                     }
                 }
 
@@ -595,10 +595,10 @@ const handleMonsterTurn = () => {
                     if(getCurrentMonster().checkCharacterHealth() === true && isTransitionToNextMonster === false) {
                         if(currentMonsterIndex === 3) {
                             //Set Goblin Boss Sprite to idle
-                            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-idle.png')"
+                            monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Boss-Sprite/boss-idle.png')"
                         } else {
                             //Set Goblin Monster Sprite to idle
-                            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"
+                            monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Sprite/goblin-idle.png')"
                         }
                     }
                 }, 1650)
@@ -673,22 +673,22 @@ const handlePlayerTurn = (actionType) => {
             battleLogEl.innerHTML += `<p>${player.getName()} used a powered up attack on ${monster.getName()} for total damage: ${playerDmg} against ${monster.getName()} HP: ${monster.getHP()}.</p>`
 
             //Update Player's Sprite to Powered Up Attck Skill
-            playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-powered-attack.png')"
+            playerSpriteEl.style.backgroundImage = "url('./assets/Warrior-Sprite/warrior-powered-attack.png')"
         } else {
             //Display battle log Player Normal Attack 
             battleLogEl.innerHTML += `<p>${player.getName()} attacked ${monster.getName()} for total damage: ${playerDmg} against ${monster.getName()} HP: ${monster.getHP()}.</p>`
 
             //Update Player's Sprite to Attck Skill
-            playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-attack.png')"
+            playerSpriteEl.style.backgroundImage = "url('./assets/Warrior-Sprite/warrior-attack.png')"
         }
 
         //Set Damage Sprite based on whether the attacked Monster is the Goblin Boss or regular Goblin
         if(currentMonsterIndex === 3) {
             //Set Goblin Boss Sprite to Taking Damage
-            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-damage.png')"
+            monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Boss-Sprite/boss-damage.png')"
             } else {
             //Set Goblin Monster's Sprite to Taking Damage
-            monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-damage.png')"
+            monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Sprite/goblin-damage.png')"
             }
 
             //Wait for 1.65 seconds before updating Boss Goblin or Goblin Monster Sprite to idle 
@@ -696,16 +696,16 @@ const handlePlayerTurn = (actionType) => {
             if(monster.checkCharacterHealth() === true && isTransitionToNextMonster === false) {
                 if(currentMonsterIndex === 3) {
                     //Set Goblin Boss Sprite to idle
-                    monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Boss-Sprite/boss-idle.png')"
+                    monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Boss-Sprite/boss-idle.png')"
                 } else {
                     //Set Goblin Monster Sprite to idle
-                    monsterSpriteEl.style.backgroundImage = "url('../assets/Goblin-Sprite/goblin-idle.png')"
+                    monsterSpriteEl.style.backgroundImage = "url('./assets/Goblin-Sprite/goblin-idle.png')"
                 }
             }
         }, 1650)
 
         //Wait for 1.65 seconds before updating Player's Sprite to idle 
-        setTimeout(()=>{playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-idle.png')"}, 1650)
+        setTimeout(()=>{playerSpriteEl.style.backgroundImage = "url('./assets/Warrior-Sprite/warrior-idle.png')"}, 1650)
         
         //Auto scroll to show latest battle log 
         battleLogMsgScroll()
@@ -714,9 +714,9 @@ const handlePlayerTurn = (actionType) => {
         battleLogEl.innerHTML += `<p>${player.getName()} used a Power Up ${player.getPowerUp()}x next attack ${player.getPoweredUpAttackDmg()} damage.</p>`
 
         //Set Player's Sprite to Power Up
-        playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-powerup.png')"
+        playerSpriteEl.style.backgroundImage = "url('./assets/Warrior-Sprite/warrior-powerup.png')"
         //Wait for 1.65 seconds before updating Player's Sprite to idle 
-        setTimeout(()=>{playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-idle.png')"}, 1650)
+        setTimeout(()=>{playerSpriteEl.style.backgroundImage = "url('./assets/Warrior-Sprite/warrior-idle.png')"}, 1650)
 
         //Auto scroll to show latest battle log 
         battleLogMsgScroll()
@@ -730,10 +730,10 @@ const handlePlayerTurn = (actionType) => {
             battleLogEl.innerHTML += `<p>${player.getName()} healed ${player.getHP() - playerHPBeforeHealingAction} HP with potion. Current HP: ${player.getHP()}.</p>`
 
             //Update Player's Sprite to Healing Potion
-            playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-healing.png')"
+            playerSpriteEl.style.backgroundImage = "url('./assets/Warrior-Sprite/warrior-healing.png')"
         }
         //Wait for 1.65 seconds before updating Player's Sprite to idle 
-        setTimeout(()=>{playerSpriteEl.style.backgroundImage = "url('../assets/Warrior-Sprite/warrior-idle.png')"}, 1650)
+        setTimeout(()=>{playerSpriteEl.style.backgroundImage = "url('./assets/Warrior-Sprite/warrior-idle.png')"}, 1650)
         //Auto scroll to show latest battle log 
         battleLogMsgScroll()
     }
