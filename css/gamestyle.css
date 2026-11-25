@@ -171,9 +171,8 @@ a:hover {
     height: 8rem;
     background-image: url('../assets/Warrior-Sprite/warrior-idle.png');
     background-repeat: no-repeat;
-    background-size: 32rem auto;
-    background-size: cover;
-    background-position: -16rem 0;
+    background-size: 16rem auto;
+    background-position: 0 0;
     animation-name: idle;
     animation-duration: 0.6s;
     animation-timing-function: steps(2);
@@ -206,9 +205,8 @@ a:hover {
     height: 8rem;
     background-image: url('../assets/Goblin-Sprite/goblin-idle.png');
     background-repeat: no-repeat;
-    background-size: 32rem auto;
-    background-size: cover;
-    background-position: -16rem 0;
+    background-size: 16rem auto;
+    background-position: 0 0;
     animation-name: idle;
     animation-duration: 0.6s;
     animation-timing-function: steps(2);
